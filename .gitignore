@@ -1,0 +1,9 @@
+# Secrets
+.env
+credentials.json
+token.json
+
+# Disposable / regenerated
+.tmp/
+temporary screenshots/
+node_modules/

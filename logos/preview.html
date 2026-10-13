@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UGP — варіанти логотипа</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,300&family=Onest:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#f7f6f2; --ink:#141821; --muted:#5d6470; --line:#dcd9d2; --navy:#161d2a; --accent:#1f3d8f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.6 "Onest", system-ui, sans-serif; }
+  main { max-width: 1240px; margin: 0 auto; padding: 64px 24px 96px; }
+  h1 { font: 300 clamp(36px, 4vw, 56px)/1.1 "Literata", Georgia, serif; letter-spacing: -.02em; margin: 0 0 12px; }
+  .lead { color: var(--muted); max-width: 680px; margin: 0 0 56px; }
+  .variant { padding: 40px 0; border-top: 1px solid var(--line); }
+  .variant header { display: grid; grid-template-columns: 120px 180px 1fr auto; gap: 24px; align-items: baseline; margin-bottom: 24px; }
+  .num { margin: 0; font-size: 13px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+  h2 { margin: 0; font: 300 32px/1.1 "Literata", Georgia, serif; }
+  .idea { margin: 0; color: var(--muted); font-size: 15px; max-width: 560px; }
+  .files { margin: 0; font-size: 13px; color: var(--muted); }
+  code { font-size: 12px; }
+  .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .panel { margin: 0; min-height: 320px; padding: 48px 32px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
+  .panel--light { background: #fff; border: 1px solid var(--line); }
+  .panel--dark { background: var(--navy); color: #fff; }
+  .panel img { max-width: 100%; display: block; }
+  figcaption { font-size: 13px; color: inherit; opacity: .6; }
+  .small { display: flex; align-items: center; gap: 14px; font-size: 12px; opacity: .85; }
+  .small span { opacity: .6; }
+  @media (max-width: 800px) {
+    .variant header { grid-template-columns: 1fr; gap: 6px; }
+    .panels { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>UGP — варіанти логотипа</h1>
+  <p class="lead">Три напрями: строгі прямі лінії та гострі кути, без заокруглень і градієнтів. Кожен варіант — у двох версіях: темний на світлому та світлий на темному. Підпис «UKRAINE GATEWAY PARTNERS» переведено в криві, тож логотип виглядає однаково на будь-якому пристрої.</p>
+
+  <section class="variant">
+    <header>
+      <p class="num">Варіант 1</p>
+      <h2>Portal</h2>
+      <p class="idea">Три вкладені ворота, що йдуть углиб, — прохід, перспектива, шлях від входу до результату. Поруч — монограма UGP прямими штрихами й назва в три рядки.</p>
+      <p class="files"><code>logo-1.svg</code> · <code>logo-1-light.svg</code></p>
+    </header>
+    <div class="panels">
+      <figure class="panel panel--light">
+        <img src="logo-1.svg" alt="Варіант 1, темний на світлому" style="height:112px">
+        <figcaption>Темний на світлому</figcaption>
+        <div class="small"><img src="logo-1.svg" alt="" style="height:36px"><span>малий розмір</span></div>
+      </figure>
+      <figure class="panel panel--dark">
+        <img src="logo-1-light.svg" alt="Варіант 1, світлий на темному" style="height:112px">
+        <figcaption>Світлий на темному</figcaption>
+        <div class="small"><img src="logo-1-light.svg" alt="" style="height:36px"><span>малий розмір</span></div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="variant">
+    <header>
+      <p class="num">Варіант 2</p>
+      <h2>Frame</h2>
+      <p class="idea">Монограма з гострими скошеними кутами в рамці, що відкривається знизу під літерою G, — «брама» в межах бренду. Назва на всю ширину рамки.</p>
+      <p class="files"><code>logo-2.svg</code> · <code>logo-2-light.svg</code></p>
+    </header>
+    <div class="panels">
+      <figure class="panel panel--light">
+        <img src="logo-2.svg" alt="Варіант 2, темний на світлому" style="height:112px">
+        <figcaption>Темний на світлому</figcaption>
+        <div class="small"><img src="logo-2.svg" alt="" style="height:36px"><span>малий розмір</span></div>
+      </figure>
+      <figure class="panel panel--dark">
+        <img src="logo-2-light.svg" alt="Варіант 2, світлий на темному" style="height:112px">
+        <figcaption>Світлий на темному</figcaption>
+        <div class="small"><img src="logo-2-light.svg" alt="" style="height:36px"><span>малий розмір</span></div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="variant">
+    <header>
+      <p class="num">Варіант 3</p>
+      <h2>Threshold</h2>
+      <p class="idea">Квадратний дверний проріз із прочиненими стулками в гострій перспективі — відкритий вхід, «брама» в Україну для інвестора. Вертикальна композиція.</p>
+      <p class="files"><code>logo-3.svg</code> · <code>logo-3-light.svg</code></p>
+    </header>
+    <div class="panels">
+      <figure class="panel panel--light">
+        <img src="logo-3.svg" alt="Варіант 3, темний на світлому" style="height:168px">
+        <figcaption>Темний на світлому</figcaption>
+        <div class="small"><img src="logo-3.svg" alt="" style="height:56px"><span>малий розмір</span></div>
+      </figure>
+      <figure class="panel panel--dark">
+        <img src="logo-3-light.svg" alt="Варіант 3, світлий на темному" style="height:168px">
+        <figcaption>Світлий на темному</figcaption>
+        <div class="small"><img src="logo-3-light.svg" alt="" style="height:56px"><span>малий розмір</span></div>
+      </figure>
+    </div>
+  </section>
+</main>
+</body>
+</html>
