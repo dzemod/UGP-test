@@ -362,6 +362,13 @@ article.svc:hover { background: var(--card-2); border-color: var(--line-2); }
 .trust__label { flex: none; font: 300 26px/1.2 var(--serif); letter-spacing: -.01em; padding-right: 40px; border-right: 1px solid var(--line-2); }
 .trust__logos { flex: 1; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--gap); }
 .trust__logos .ph-logo { width: 100%; }
+.trust__label { max-width: 220px; }
+.trust__logos--who { gap: 0; }
+.who { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 6px 16px; border-left: 1px solid var(--line-2); }
+.who__ico { width: 32px; height: 32px; color: var(--accent); transition: transform .4s var(--ease); }
+.who:first-child { border-left: 0; padding-left: 0; }
+.who:hover .who__ico { transform: translateY(-3px); }
+.who span { font-size: 14.5px; font-weight: 500; line-height: 1.3; color: var(--ink); }
 
 /* ---------- 10. Відгуки ---------- */
 /* Відгук: велике фото + цитата в дві колонки */
@@ -480,6 +487,8 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .process::before { display: none; }
   .team { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .trust__logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .trust__logos--who { row-gap: 28px; }
+  .who:nth-child(3n+1) { border-left: 0; padding-left: 0; }
   .contacts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .footer__top { grid-template-columns: repeat(3, 1fr); row-gap: 40px; }
   .footer__brand { grid-column: 1 / -1; }
@@ -567,6 +576,12 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .exp__item { gap: 18px; }
   .team { grid-template-columns: minmax(0, 1fr); }
   .trust__logos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .trust__logos--who { row-gap: 24px; }
+  .who { flex-direction: row; align-items: center; gap: 12px; padding: 4px 10px; }
+  .who:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .who:nth-child(even) { border-left: 1px solid var(--line-2); padding-left: 10px; }
+  .who__ico { width: 26px; height: 26px; flex: none; }
+  .who span { font-size: 14px; }
   .contacts { grid-template-columns: minmax(0, 1fr); }
   .contact-card { min-height: 0; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 16px; padding: 22px; }
   .contact-card > .ico { margin: 0; }

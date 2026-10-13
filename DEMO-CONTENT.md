@@ -30,7 +30,7 @@ Everything below is **demonstration content** for the design mockup. In the code
 
 | What | Where | Needed from the client |
 |---|---|---|
-| «Нам довіряють» logo strip (6 dashed boxes) | Trust section | Client logos, only after written permission |
+| «Нам довіряють» logo strip — currently replaced by «З ким ми працюємо»; the old strip is kept as a commented-out block with instructions | Trust section in `index.html` | Client logos, only after written permission |
 | Legal entity name and ЄДРПОУ code | Footer (dashed box), key `footer.legal` | Legal details |
 | Privacy policy link | Form consent + footer (`data-todo="privacy-policy"`) | Privacy policy page/URL |
 | Telegram and Viber links | Contacts section (`data-todo="telegram"`, `data-todo="viber"`) | Exact messenger links |

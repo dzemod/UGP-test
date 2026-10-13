@@ -67,6 +67,13 @@
   <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="9" cy="9.5" r="1.8" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m4 18 5-5 4 4 3-3 4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
   <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="4" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M4 21c.8-4.2 4-6.5 8-6.5s7.2 2.3 8 6.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+  <!-- «З ким ми працюємо»: лінійні іконки, гострі кути (stroke-linejoin: miter) -->
+  <symbol id="w-investor" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="miter" stroke-linecap="square"><path d="M5 27h22M7 27V15M13 27V11M19 27V15M25 27V8"/><path d="M6 10l7-5 6 4 7-5"/></g></symbol>
+  <symbol id="w-owner" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="miter" stroke-linecap="square"><path d="M4 27h24M7 27V13l9-7 9 7v14"/><path d="M13 27v-8h6v8"/><path d="M16 6V3"/></g></symbol>
+  <symbol id="w-developer" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="miter" stroke-linecap="square"><path d="M9 28V5M5 5h22M9 5l5 5M23 5v6"/><path d="M20 11h6v5h-6z"/><path d="M4 28h24M15 28V18h10v10M15 23h10"/></g></symbol>
+  <symbol id="w-foreign" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="miter" stroke-linecap="square"><path d="M16 4l11 6v12l-11 6-11-6V10z"/><path d="M5 10l11 6 11-6M16 16v12"/></g></symbol>
+  <symbol id="w-community" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="miter" stroke-linecap="square"><path d="M13 8h6v6h-6zM4 13h5v5H4zM23 13h5v5h-5z"/><path d="M10 26v-5h12v5M3 26v-3h7M22 23h7v3"/></g></symbol>
+  <symbol id="w-authority" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="miter" stroke-linecap="square"><path d="M4 11L16 4l12 7z"/><path d="M4 28h24M6 25h20M8 14v11M13 14v11M19 14v11M24 14v11"/></g></symbol>
   <symbol id="i-quote" viewBox="0 0 48 48"><path d="M8 34c0-9 4-16 12-20l2 3c-5 3-7 7-7 11h6v10H8zm19 0c0-9 4-16 12-20l2 3c-5 3-7 7-7 11h6v10H27z" fill="currentColor"/></symbol>
 </svg>
 
@@ -458,19 +465,35 @@
     </div>
   </section>
 
-  <!-- 9. НАМ ДОВІРЯЮТЬ (заглушки; логотипи — лише після дозволу клієнтів) -->
+  <!-- 9. З КИМ МИ ПРАЦЮЄМО (аудиторія та стейкхолдери з брифу) -->
   <section class="trust" aria-labelledby="trust-title">
     <div class="container trust__inner">
-      <h2 id="trust-title" class="trust__label" data-i18n="trust.title">Нам довіряють</h2>
-      <ul class="trust__logos">
-        <li class="ph-logo reveal" data-i18n="ph.logo">Логотип</li>
-        <li class="ph-logo reveal" data-i18n="ph.logo">Логотип</li>
-        <li class="ph-logo reveal" data-i18n="ph.logo">Логотип</li>
-        <li class="ph-logo reveal" data-i18n="ph.logo">Логотип</li>
-        <li class="ph-logo reveal" data-i18n="ph.logo">Логотип</li>
-        <li class="ph-logo reveal" data-i18n="ph.logo">Логотип</li>
+      <h2 id="trust-title" class="trust__label" data-i18n="trust.title">З ким ми працюємо</h2>
+      <ul class="trust__logos trust__logos--who">
+        <li class="who reveal"><svg class="who__ico" aria-hidden="true"><use href="#w-investor"/></svg><span data-i18n="who.investors">Інвестори</span></li>
+        <li class="who reveal"><svg class="who__ico" aria-hidden="true"><use href="#w-owner"/></svg><span data-i18n="who.owners">Власники активів</span></li>
+        <li class="who reveal"><svg class="who__ico" aria-hidden="true"><use href="#w-developer"/></svg><span data-i18n="who.developers">Девелопери</span></li>
+        <li class="who reveal"><svg class="who__ico" aria-hidden="true"><use href="#w-foreign"/></svg><span data-i18n="who.foreign">Іноземний капітал</span></li>
+        <li class="who reveal"><svg class="who__ico" aria-hidden="true"><use href="#w-community"/></svg><span data-i18n="who.communities">Громади</span></li>
+        <li class="who reveal"><svg class="who__ico" aria-hidden="true"><use href="#w-authority"/></svg><span data-i18n="who.authorities">Органи влади</span></li>
       </ul>
     </div>
+    <!--
+      «НАМ ДОВІРЯЮТЬ» — смуга логотипів клієнтів. Увімкнути лише після письмового дозволу клієнтів
+      (бриф: «погоджені логотипи… публікуємо після отримання дозволу»). Щоб увімкнути: замінити блок вище на цей,
+      у кожен <li> вставити <img src="assets/img/logos/…" alt="Назва клієнта">, повернути ключ trust.title = «Нам довіряють» / "Trusted by".
+    <div class="container trust__inner">
+      <h2 id="trust-title" class="trust__label">Нам довіряють</h2>
+      <ul class="trust__logos">
+        <li class="ph-logo reveal">Логотип</li>
+        <li class="ph-logo reveal">Логотип</li>
+        <li class="ph-logo reveal">Логотип</li>
+        <li class="ph-logo reveal">Логотип</li>
+        <li class="ph-logo reveal">Логотип</li>
+        <li class="ph-logo reveal">Логотип</li>
+      </ul>
+    </div>
+    -->
   </section>
 
   <!-- 10. ВІДГУКИ (заглушки; лише реальні погоджені відгуки) -->

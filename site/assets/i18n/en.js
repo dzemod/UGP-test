@@ -196,7 +196,13 @@ window.UGP_I18N.en = {
   "team.m3": "GR, communities, reputation. Work with authorities, communities and local self-government.",
 
   /* ---------- 9–10. Trust & testimonials ---------- */
-  "trust.title": "Trusted by",
+  "trust.title": "Who we work with",
+  "who.investors": "Investors",
+  "who.owners": "Asset owners",
+  "who.developers": "Developers",
+  "who.foreign": "International capital",
+  "who.communities": "Communities",
+  "who.authorities": "Public authorities",
   "reviews.eyebrow": "Testimonials",
   "reviews.title": "Client testimonials",
   /* DEMO — replace with real data before launch (review text, name, position) */
