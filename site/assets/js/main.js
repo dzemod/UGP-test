@@ -49,12 +49,62 @@
   let lang = 'uk';
   const t = (key) => (lang === 'en' && dicts.en[key] != null ? dicts.en[key] : UK_MESSAGES[key] || key);
 
+  // ---------- Типографіка: короткі слова не лишаються в кінці рядка, тире не починає рядок ----------
+  // Працює для обох мов і для будь-яких майбутніх правок текстів (у HTML чи en.js).
+  const SHORT_WORDS = {
+    uk: 'і|й|в|у|з|із|зі|та|до|на|а|о|не|по|за|від|для|чи|або|як|що|ні|ж|же|би',
+    en: 'a|an|the|of|to|in|on|at|by|for|and|or|as|is|we|our|its|with|from|no',
+  };
+  const NBSP = ' ';
+  const glueRe = {
+    uk: new RegExp(`(^|[\\s(«"])(${SHORT_WORDS.uk})\\s+`, 'giu'),
+    en: new RegExp(`(^|[\\s(“"])(${SHORT_WORDS.en})\\s+`, 'giu'),
+  };
+  const typeset = (root, code) => {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: (t) => (t.parentElement.closest('script, style, input, textarea, svg') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
+    });
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((t) => {
+      let s = t.data;
+      // двічі — щоб обробити підряд «і в», «and the»
+      s = s.replace(glueRe[code], `$1$2${NBSP}`).replace(glueRe[code], `$1$2${NBSP}`);
+      s = s.replace(/ ([—–])/g, `${NBSP}$1`); // тире лишається з попереднім словом
+      if (s !== t.data) t.data = s;
+    });
+    // Без «вдів»: у текстах із 3+ слів два останні слова не розриваються
+    const blocks = root.matches?.(WIDOW_SEL) ? [root] : [];
+    blocks.push(...root.querySelectorAll(WIDOW_SEL));
+    blocks.forEach(noWidow);
+  };
+  const WIDOW_SEL = 'p, dd, h1, h2, h3, h4, blockquote, figcaption span, .tasks__list li span, .principles b, .steps-list b, .intl__rows b';
+  function noWidow(el) {
+    if (el.querySelector('p, li, div, dd')) return;
+    const full = el.textContent.replace(/\s+$/, '');
+    if (full.split(/[\s ]+/).length < 3) return;
+    // Уже зʼєднано (останній пробіл — нерозривний)? Тоді нічого не робимо — функція ідемпотентна.
+    const lastGap = full.search(/[\s ](?=[^\s ]*$)/);
+    if (lastGap > -1 && full[lastGap] === NBSP) return;
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const texts = [];
+    while (walker.nextNode()) texts.push(walker.currentNode);
+    for (let i = texts.length - 1; i >= 0; i--) {
+      const t = texts[i];
+      const trimmed = t.data.replace(/[ \t\n\r]+$/, '');
+      const idx = trimmed.search(/[ \t\n\r](?=[^ \t\n\r]*$)/);
+      if (idx > -1) { t.data = trimmed.slice(0, idx) + NBSP + trimmed.slice(idx + 1) + t.data.slice(trimmed.length); return; }
+      if (trimmed.length && i < texts.length - 1) return; // слово в окремому тезі без пробілу — не чіпаємо
+    }
+  }
+
   const applyLang = (next) => {
     lang = next === 'en' ? 'en' : 'uk';
     const en = lang === 'en' ? dicts.en : null;
     textNodes.forEach((n) => {
       const value = en && en[n.key] != null ? en[n.key] : n.uk;
       if (n.el.innerHTML !== value) n.el.innerHTML = value;
+      typeset(n.el, lang);
     });
     attrNodes.forEach((n) => n.pairs.forEach((p) => {
       n.el.setAttribute(p.attr, en && en[p.key] != null ? en[p.key] : p.uk);
@@ -84,6 +134,7 @@
   if (missing.length) console.warn('[UGP i18n] Немає англійського перекладу для ключів:', missing);
 
   applyLang(readLang());
+  typeset(document.body, lang); // також тексти без перекладу (контакти, підписи)
 
   // Перемикання мови: індикатор ковзає (CSS transform, 0.32s), тексти згасають (0.2s) → змінюються → з'являються (0.25s).
   // Сторінка не «стрибає»: елемент у центрі екрана лишається на тому ж місці після зміни текстів.
