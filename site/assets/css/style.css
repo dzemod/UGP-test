@@ -678,6 +678,8 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
 .rules > li::before { top: 0; }
 .rules > li:last-child::after { bottom: 0; }
 .why__list { --rule-c: var(--dark-line); }
+/* Список «Чому UGP» без нижньої лінії: далі йде верхня лінія блоку «Принципи» — дві лінії поспіль дали б порожню смугу */
+.why__list > li:last-child::after { content: none; }
 .contact__notes { --rule-c: var(--line); }
 .intl__rows { --rule-c: rgba(255, 255, 255, .22); }
 .js .rules > li::before, .js .rules > li:last-child::after { transform: scaleX(0); transition: transform .9s var(--ease) calc(var(--i, 0) * 80ms); }
@@ -709,13 +711,15 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
 /* Слова з дефісом не розриваються */
 .nw { white-space: nowrap; }
 
-/* ---------- Плаваюча кнопка CTA (телефон і планшет) ---------- */
+/* ---------- Плаваюча кнопка CTA — ВИМКНЕНО ----------
+   Перекривала контент під час прокручування на телефоні; CTA тепер унизу мобільного меню (.nav__cta).
+   Щоб повернути: розкоментувати ці стилі, розмітку .sticky-cta в index.html і блок у main.js.
+   Колір бронзовий — помітний і на світлих, і на темних секціях (білий текст на #87562a ≈ 6:1).
 .sticky-cta { display: none; }
 @media (max-width: 900px) {
   .sticky-cta {
     position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 60;
     display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 14px 26px;
-    /* Бронзова — помітна і на світлих, і на темних секціях (білий текст на #87562a ≈ 6:1) */
     border-radius: 999px; background: var(--accent); color: #fff; font: 500 16px/1.2 var(--sans); text-decoration: none; white-space: nowrap;
     border: 1px solid rgba(255, 255, 255, .22); box-shadow: 0 14px 34px rgba(var(--shadow), .35);
     opacity: 0; visibility: hidden; transform: translate(-50%, 140%);
@@ -724,6 +728,13 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .sticky-cta.is-visible { opacity: 1; visibility: visible; transform: translate(-50%, 0); transition: transform .6s var(--ease), opacity .5s var(--ease), visibility 0s; }
   .sticky-cta:active { transform: translate(-50%, 0) scale(.98); }
   .sticky-cta:focus-visible { outline-offset: 4px; }
+}
+*/
+
+/* Кнопка «Обговорити проєкт» унизу мобільного меню */
+.nav__cta { display: none; }
+@media (max-width: 900px) {
+  .nav__cta { display: flex; margin-top: 20px; font-size: 16px; }
 }
 
 /* ---------- Мобільні виправлення (аудит) ---------- */
@@ -940,6 +951,8 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .cta__wrap { padding-top: 220px; }
   .cta__panel { padding-left: var(--card-pad); padding-right: var(--card-pad); }
   .why__list li { gap: 16px; }
+  /* «Принципи» на телефоні: звичайний відступ заголовка замість великого відступу стрічки */
+  .principles { margin-top: var(--head-gap); padding-top: var(--head-gap); }
   .why__ico { width: 52px; height: 52px; }
 
 

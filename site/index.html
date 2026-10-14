@@ -108,6 +108,8 @@
         <a href="tel:+380952707611"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>+380 95 270 7611</a>
         <a href="mailto:hello@ugp.ua"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg>hello@ugp.ua</a>
       </div>
+      <!-- Головна дія в мобільному меню (на десктопі — кнопка в шапці) -->
+      <a class="btn btn--dark btn--block nav__cta" href="#contact-form"><span data-i18n="cta.discuss">Обговорити проєкт</span> <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </nav>
     <div class="header__end">
       <div class="header__contacts">
@@ -684,8 +686,10 @@
   <p class="footer__wordmark" aria-hidden="true">Ukraine Gateway</p>
 </footer>
 
-<!-- Плаваюча кнопка на телефоні/планшеті: видима після hero, прихована, коли на екрані форма чи футер (main.js) -->
+<!-- Плаваюча кнопка CTA на телефоні — ВИМКНЕНО (перекривала контент під час прокручування); CTA тепер унизу мобільного меню.
+     Щоб повернути: розкоментувати цей рядок, блок «Плаваюча кнопка CTA» у main.js і стилі .sticky-cta у style.css.
 <a class="sticky-cta" href="#contact-form" tabindex="-1" aria-hidden="true"><span data-i18n="cta.discuss">Обговорити проєкт</span> <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+-->
 
 <script src="assets/js/vendor/lenis.min.js"></script><!-- Lenis 1.1.13 (MIT), плавна прокрутка -->
 <script src="assets/i18n/en.js"></script>

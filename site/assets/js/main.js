@@ -319,6 +319,8 @@
   }, { passive: true });
   updateActive();
 
+  /* ВИМКНЕНО: плаваюча кнопка CTA (перекривала контент на телефоні; CTA тепер у мобільному меню).
+     Щоб повернути — розкоментувати блок і розмітку .sticky-cta в index.html.
   // ---------- Плаваюча кнопка CTA (телефон і планшет) ----------
   // Видима після hero; ховається, коли на екрані форма, футер або відкрите меню. На десктопі прихована в CSS.
   const stickyCta = document.querySelector('.sticky-cta');
@@ -339,6 +341,7 @@
     burger.addEventListener('click', () => requestAnimationFrame(render));
     nav.addEventListener('click', () => requestAnimationFrame(render));
   }
+  */
 
   // ---------- Лічильник для 20 / 15 / 25 ----------
   const countUp = (el) => {
