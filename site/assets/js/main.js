@@ -24,15 +24,19 @@
   // Службові повідомлення українською (англійські — в en.js, ключі msg.*)
   const UK_MESSAGES = {
     'msg.nameRequired': 'Вкажіть, будь ласка, ваше ім’я.',
-    'msg.contactRequired': 'Вкажіть телефон або e-mail.',
-    'msg.contactInvalid': 'Перевірте формат: телефон (+380 …) або e-mail (name@company.com).',
+    'msg.phoneRequired': 'Вкажіть номер телефону.',
+    'msg.phoneInvalid': 'Номер неповний: потрібно 9 цифр після +380, наприклад +380 95 123 45 67.',
+    'msg.emailRequired': 'Вкажіть e-mail.',
+    'msg.emailInvalid': 'Перевірте e-mail: формат name@company.com.',
     'msg.consentRequired': 'Потрібна згода на обробку даних.',
     'msg.sendFailed': 'Не вдалося надіслати запит.',
     'msg.unavailable': 'Онлайн-форма тимчасово недоступна.',
     'msg.fallback': 'Ваші дані збережено у формі — спробуйте ще раз або зв’яжіться з нами напряму:',
-    'msg.success': 'Дякуємо! Запит отримано — ми зв’яжемося з вами найближчим часом.',
+    'msg.successTitle': 'Дякуємо! Запит отримано.',
+    'msg.success': 'Ми зв’яжемося з вами найближчим часом.',
     'msg.menuOpen': 'Відкрити меню',
     'msg.menuClose': 'Закрити меню',
+    'msg.slideOf': 'Відгук {i} з {n}',
   };
 
   const textNodes = [...document.querySelectorAll('[data-i18n]')].map((el) => ({
@@ -56,22 +60,40 @@
     en: 'a|an|the|of|to|in|on|at|by|for|and|or|as|is|we|our|its|with|from|no',
   };
   const NBSP = ' ';
+  // Попередній символ перевіряється lookbehind-ом (не «з’їдається»), тож ланцюжки «is an», «і в», «with no» склеюються за один прохід
   const glueRe = {
-    uk: new RegExp(`(^|[\\s(«"])(${SHORT_WORDS.uk})\\s+`, 'giu'),
-    en: new RegExp(`(^|[\\s(“"])(${SHORT_WORDS.en})\\s+`, 'giu'),
+    uk: new RegExp(`(?<=^|[\\s(«"])(${SHORT_WORDS.uk})\\s+`, 'giu'),
+    en: new RegExp(`(?<=^|[\\s(“"])(${SHORT_WORDS.en})\\s+`, 'giu'),
+  };
+  // Слова з дефісом («self-government», «End-to-end», «e-mail») не розриваються на дефісі
+  const HYPHEN_WORD = /[\p{L}\d]+(?:-[\p{L}\d]+)+/gu;
+  const keepHyphenated = (t) => {
+    if (t.parentElement.classList.contains('nw') || !HYPHEN_WORD.test(t.data)) return;
+    HYPHEN_WORD.lastIndex = 0;
+    const frag = document.createDocumentFragment();
+    let last = 0;
+    t.data.replace(HYPHEN_WORD, (word, at) => {
+      if (at > last) frag.append(t.data.slice(last, at));
+      const span = document.createElement('span');
+      span.className = 'nw'; span.textContent = word;
+      frag.append(span);
+      last = at + word.length;
+    });
+    if (last < t.data.length) frag.append(t.data.slice(last));
+    t.replaceWith(frag);
   };
   const typeset = (root, code) => {
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-      acceptNode: (t) => (t.parentElement.closest('script, style, input, textarea, svg') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
+      acceptNode: (t) => (t.parentElement.closest('script, style, input, textarea, svg, title') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
     });
     const nodes = [];
     while (walker.nextNode()) nodes.push(walker.currentNode);
     nodes.forEach((t) => {
       let s = t.data;
-      // двічі — щоб обробити підряд «і в», «and the»
-      s = s.replace(glueRe[code], `$1$2${NBSP}`).replace(glueRe[code], `$1$2${NBSP}`);
+      s = s.replace(glueRe[code], `$1${NBSP}`);
       s = s.replace(/ ([—–])/g, `${NBSP}$1`); // тире лишається з попереднім словом
       if (s !== t.data) t.data = s;
+      keepHyphenated(t);
     });
     // Без «вдів»: у текстах із 3+ слів два останні слова не розриваються
     const blocks = root.matches?.(WIDOW_SEL) ? [root] : [];
@@ -83,8 +105,9 @@
     if (el.querySelector('p, li, div, dd')) return;
     const full = el.textContent.replace(/\s+$/, '');
     if (full.split(/[\s ]+/).length < 3) return;
-    // Довгі закінчення («stakeholder engagement») не склеюємо — інакше рядок вилазить за межі вузької картки
-    if (full.split(/\s+/).slice(-2).join(' ').length > 18) return;
+    // Довгі закінчення («stakeholder engagement», «або створення активу») не склеюємо — інакше рядок вилазить за межі
+    // вузької картки. Рахуємо весь нерозривний шматок: слова, вже склеєні з коротким словом, теж входять у довжину.
+    if (full.split(/[ \t\n\r]+/).slice(-2).join(' ').length > 18) return;
     // Уже зʼєднано (останній пробіл — нерозривний)? Тоді нічого не робимо — функція ідемпотентна.
     const lastGap = full.search(/[\s ](?=[^\s ]*$)/);
     if (lastGap > -1 && full[lastGap] === NBSP) return;
@@ -206,8 +229,8 @@
   });
 
   // ---------- Плавний перехід до секцій з урахуванням шапки ----------
-  // Після прокручування шапка стає компактною — відступ рахуємо під її компактну висоту.
-  const headerOffset = () => (window.matchMedia('(max-width: 600px)').matches ? 57 : 63);
+  // Висота шапки стала (компактний стан змінює лише тінь і масштаб логотипа), тож відступ = її фактична висота
+  const headerOffset = () => document.querySelector('.header').getBoundingClientRect().height;
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href^="#"]');
     if (!a || a.hasAttribute('data-todo') || e.defaultPrevented) return;
@@ -273,13 +296,57 @@
   }, { passive: true });
   onScroll();
 
+  // ---------- Активний розділ у меню ----------
+  // Підсвічується пункт, чий розділ перетнув лінію на 35% висоти екрана. «Контакти» охоплюють і форму звернення.
+  const navLinks = [...document.querySelectorAll('.nav__list a[href^="#"]')];
+  const regions = navLinks.map((a) => ({
+    a, el: a.hash === '#contacts' ? (document.getElementById('contact-form') || document.querySelector(a.hash)) : document.querySelector(a.hash),
+  })).filter((r) => r.el);
+  let activeLink = null;
+  const updateActive = () => {
+    const line = window.innerHeight * 0.35;
+    let current = null;
+    regions.forEach((r) => { if (r.el.getBoundingClientRect().top <= line) current = r.a; });
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) current = regions[regions.length - 1]?.a || current;
+    if (current === activeLink) return;
+    if (activeLink) activeLink.removeAttribute('aria-current');
+    if (current) current.setAttribute('aria-current', 'location');
+    activeLink = current;
+  };
+  let navTick = false;
+  window.addEventListener('scroll', () => {
+    if (!navTick) { navTick = true; requestAnimationFrame(() => { updateActive(); navTick = false; }); }
+  }, { passive: true });
+  updateActive();
+
+  // ---------- Плаваюча кнопка CTA (телефон і планшет) ----------
+  // Видима після hero; ховається, коли на екрані форма, футер або відкрите меню. На десктопі прихована в CSS.
+  const stickyCta = document.querySelector('.sticky-cta');
+  if (stickyCta && 'IntersectionObserver' in window) {
+    const watch = { hero: document.querySelector('.hero'), form: document.getElementById('contact-form'), footer: document.querySelector('.footer') };
+    const seen = { hero: true, form: false, footer: false };
+    const render = () => {
+      const show = !seen.hero && !seen.form && !seen.footer && !nav.classList.contains('is-open');
+      stickyCta.classList.toggle('is-visible', show);
+      stickyCta.setAttribute('aria-hidden', String(!show));
+      stickyCta.tabIndex = show ? 0 : -1;
+    };
+    const ctaIo = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { const k = Object.keys(watch).find((key) => watch[key] === e.target); if (k) seen[k] = e.isIntersecting; });
+      render();
+    }, { threshold: 0 });
+    Object.values(watch).forEach((el) => el && ctaIo.observe(el));
+    burger.addEventListener('click', () => requestAnimationFrame(render));
+    nav.addEventListener('click', () => requestAnimationFrame(render));
+  }
+
   // ---------- Лічильник для 20 / 15 / 25 ----------
   const countUp = (el) => {
     const target = parseInt(el.dataset.target || el.textContent, 10);
     if (!target || reduceMotion) return;
     el.dataset.target = target;
     el.style.minWidth = `${el.getBoundingClientRect().width}px`; // без «стрибків» сусіднього тексту
-    const duration = 800;
+    const duration = 900;
     const start = performance.now();
     const tick = (now) => {
       const p = Math.min((now - start) / duration, 1);
@@ -318,10 +385,79 @@
     strips.forEach((el) => el.classList.add('is-in'));
   }
 
-  // ---------- Поява блоків під час прокручування ----------
-  // Елементи, що з'являються одночасно, отримують невелику затримку один за одним
+  // ---------- Слайдер відгуків ----------
+  // Фото й текст з однаковим data-slide показуються разом (кросфейд — у CSS). Стрілки, свайп, ←/→ коли фокус у блоці.
+  // Автопрогравання ~7s лише коли блок на екрані; пауза при наведенні/фокусі, повна зупинка після будь-якої дії користувача.
+  document.querySelectorAll('[data-slider]').forEach((root) => {
+    const photos = [...root.querySelectorAll('.reviews__media img')];
+    const slides = [...root.querySelectorAll('.reviews__figure')];
+    const nav = root.querySelector('.reviews__nav');
+    const live = root.querySelector('.reviews__slides');
+    const n = slides.length;
+    if (n < 2 || !nav) return;
+    const pad = (x) => String(x).padStart(2, '0');
+    const AUTOPLAY_MS = 7000;
+    let index = 0; let timer = null; let stopped = reduceMotion; let paused = false; let visible = false;
+
+    nav.hidden = false;
+    root.querySelector('.reviews__total').textContent = pad(n);
+    const labelSlides = () => slides.forEach((s, i) => s.setAttribute('aria-label', t('msg.slideOf').replace('{i}', i + 1).replace('{n}', n)));
+
+    const show = (next) => {
+      index = (next + n) % n;
+      photos.forEach((img, i) => { const on = i === index; img.classList.toggle('is-active', on); img.setAttribute('aria-hidden', String(!on)); });
+      slides.forEach((s, i) => { const on = i === index; s.classList.toggle('is-active', on); s.setAttribute('aria-hidden', String(!on)); s.inert = !on; });
+      root.querySelector('.reviews__current').textContent = pad(index + 1);
+      nav.style.setProperty('--p', (index + 1) / n);
+    };
+
+    const schedule = () => {
+      clearTimeout(timer);
+      if (stopped || paused || !visible || document.hidden) return;
+      timer = setTimeout(() => { show(index + 1); schedule(); }, AUTOPLAY_MS);
+    };
+    // Дія користувача: перейти й назавжди вимкнути автопрогравання; озвучувати зміну лише тоді
+    const go = (delta) => { stopped = true; clearTimeout(timer); live.setAttribute('aria-live', 'polite'); show(index + delta); };
+
+    nav.querySelectorAll('[data-dir]').forEach((btn) => btn.addEventListener('click', () => go(Number(btn.dataset.dir))));
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); go(e.key === 'ArrowRight' ? 1 : -1); }
+    });
+    // Свайп: горизонтальний рух ≥ 40px, переважно вбік (вертикальна прокрутка сторінки не заважає)
+    let sx = 0; let sy = 0;
+    root.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    root.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - sx; const dy = e.changedTouches[0].clientY - sy;
+      if (Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1);
+    }, { passive: true });
+
+    const pause = (on) => { paused = on; schedule(); };
+    root.addEventListener('mouseenter', () => pause(true));
+    root.addEventListener('mouseleave', () => pause(false));
+    root.addEventListener('focusin', () => pause(true));
+    root.addEventListener('focusout', (e) => { if (!root.contains(e.relatedTarget)) pause(false); });
+    document.addEventListener('visibilitychange', schedule);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => { visible = e.isIntersecting; schedule(); }, { threshold: 0.35 }).observe(root);
+    }
+
+    // Під час автопрогравання зміни не озвучуються (aria-live="off"), щоб не перебивати читач екрана
+    if (!stopped) live.setAttribute('aria-live', 'off');
+    labelSlides();
+    document.addEventListener('ugp:lang', labelSlides);
+    show(0);
+  });
+
+  // ---------- Рух: єдина система ----------
+  // Одна крива (--ease у CSS), тривалість 0.5–0.9s, крок між елементами 80ms; кожна анімація грає один раз;
+  // анімуються лише transform і opacity. Для «зменшити рух» усе одразу показано без анімацій.
+  const STAGGER = 80;
+  const animate = 'IntersectionObserver' in window && !reduceMotion;
+
+  // Поява блоків під час прокручування: елементи, що з’являються одночасно, — по черзі (зверху вниз, зліва направо).
+  // Затримка передається й дочірнім анімаціям (рядки заголовка, фото) через --rd.
   const reveals = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window && !reduceMotion) {
+  if (animate) {
     const io = new IntersectionObserver((entries) => {
       const batch = entries.filter((e) => e.isIntersecting).map((e) => e.target)
         .sort((a, b) => {
@@ -329,16 +465,88 @@
           return (ra.top - rb.top) || (ra.left - rb.left);
         });
       batch.forEach((el, i) => {
-        el.style.transitionDelay = `${Math.min(i, 6) * 90}ms`;
+        const delay = Math.min(i, 6) * STAGGER;
+        el.style.transitionDelay = `${delay}ms`;
+        el.style.setProperty('--rd', `${delay}ms`);
         el.classList.add('is-in');
-        el.addEventListener('transitionend', () => { el.style.transitionDelay = ''; }, { once: true });
-        el.querySelectorAll('.exp__num').forEach((n) => setTimeout(() => countUp(n), Math.min(i, 6) * 90));
+        // Затримку знімаємо після появи (події дочірніх елементів ігноруємо), щоб наведення реагувало одразу
+        const clear = (ev) => { if (ev.target !== el) return; el.style.transitionDelay = ''; el.removeEventListener('transitionend', clear); };
+        el.addEventListener('transitionend', clear);
+        el.querySelectorAll('.exp__num').forEach((n) => setTimeout(() => countUp(n), delay + 150));
         io.unobserve(el);
       });
     }, { rootMargin: '0px 0px -40px 0px', threshold: 0.05 });
     reveals.forEach((el) => io.observe(el));
   } else {
     reveals.forEach((el) => el.classList.add('is-in'));
+  }
+
+  // Лінії-розділювачі у списках (.rules) малюються зліва направо по черзі
+  document.querySelectorAll('.rules').forEach((list) => [...list.children].forEach((li, i) => li.style.setProperty('--i', i)));
+
+  // Один раз «у полі зору» (без власного зсуву): списки з лініями, фони секцій, з’єднувальна лінія етапів, футер
+  const inview = document.querySelectorAll('[data-inview]');
+  if (animate) {
+    const vio = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('is-in');
+      vio.unobserve(e.target);
+    }), { rootMargin: '0px 0px -8% 0px', threshold: 0.01 });
+    inview.forEach((el) => vio.observe(el));
+  } else {
+    inview.forEach((el) => el.classList.add('is-in'));
+  }
+
+  // Заголовки: кожен рядок виїжджає з-під маски. Слова загортаються в .w > .wi, номер рядка — у --ln.
+  // Розмітка всередині (.tone, .pill, <br>) зберігається; нерозривні пробіли не розбивають слово.
+  // Після зміни мови текст замінюється звичайним — заголовок просто видно (анімація вже відбулась).
+  const splitHeading = (h) => {
+    if (h.classList.contains('split')) return;
+    const walker = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
+    const texts = [];
+    while (walker.nextNode()) texts.push(walker.currentNode);
+    texts.forEach((t) => {
+      if (!t.data.trim()) return;
+      const frag = document.createDocumentFragment();
+      t.data.split(/([ \n\t]+)/).forEach((part) => {
+        if (!part) return;
+        if (/^[ \n\t]+$/.test(part)) { frag.append(' '); return; }
+        const w = document.createElement('span'); w.className = 'w';
+        const wi = document.createElement('span'); wi.className = 'wi'; wi.textContent = part;
+        w.append(wi); frag.append(w);
+      });
+      t.replaceWith(frag);
+    });
+    let lastTop = null; let ln = -1;
+    h.querySelectorAll('.w').forEach((w) => {
+      const top = w.getBoundingClientRect().top;
+      if (lastTop === null || top > lastTop + 4) { ln += 1; lastTop = top; }
+      w.style.setProperty('--ln', ln);
+    });
+    h.classList.add('split');
+  };
+
+  // Hero: послідовність при завантаженні — заголовок (по рядках) → теги → текст → кнопка → фото → картка.
+  // Стартує, коли завантажено шрифти (рядки рахуються за остаточною версткою), але не пізніше ніж за 1.2s.
+  const heroTitle = document.querySelector('.hero__title');
+  const startMotion = () => {
+    if (root.classList.contains('hero-go')) return;
+    if (animate) document.querySelectorAll('main h2:not(.visually-hidden), .hero__title').forEach(splitHeading);
+    else if (heroTitle) heroTitle.classList.add('split'); // без анімації заголовок просто видно
+    // Браузер має «побачити» початковий стан рядків (під маскою) до старту — інакше переходу не буде
+    if (heroTitle) getComputedStyle(heroTitle.querySelector('.wi') || heroTitle).transform;
+    requestAnimationFrame(() => {
+      root.classList.add('hero-go');
+      if (heroTitle) heroTitle.classList.add('is-in');
+      // Після вступу прибираємо службовий клас: кнопка й фото hero отримують звичайні (швидші) переходи для наведення
+      setTimeout(() => document.querySelectorAll('.hi').forEach((el) => el.classList.remove('hi')), 2400);
+    });
+  };
+  if (document.fonts && document.fonts.ready && animate) {
+    document.fonts.ready.then(startMotion);
+    setTimeout(startMotion, 1200);
+  } else {
+    startMotion();
   }
 
   // ---------- Форма звернення ----------
@@ -348,6 +556,8 @@
   const STORE_KEY = 'ugp-lead-draft';
   const startedAt = Date.now();
   const status = form.querySelector('.form__status');
+  const submitBtn = form.querySelector('.form__submit');
+  const contactField = form.querySelector('.field--contact');
   const fields = {
     name: form.elements.name,
     contact: form.elements.contact,
@@ -355,33 +565,94 @@
     consent: form.elements.consent,
   };
 
+  // ---------- Спосіб зв’язку: «Телефон | E-mail» ----------
+  // Для кожного способу — свій тип поля (потрібна клавіатура на телефоні), підказка, автозаповнення й перевірка.
+  // Значення кожного способу зберігається окремо й повертається при перемиканні назад.
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  const isPhone = (v) => {
-    if (!/^[+()\d\s-]+$/.test(v)) return false;
-    const digits = v.replace(/\D/g, '');
-    return digits.length >= 9 && digits.length <= 15;
+  const MODES = {
+    phone: { type: 'tel', inputmode: 'tel', autocomplete: 'tel', maxlength: '17', placeholder: '+380 XX XXX XX XX' },
+    email: { type: 'email', inputmode: 'email', autocomplete: 'email', maxlength: '120', placeholder: 'name@company.com' },
+  };
+  let mode = 'phone';
+  const values = { phone: '', email: '' };
+
+  // Маска +380 XX XXX XX XX: зберігаються лише 9 цифр номера після коду країни
+  const PHONE_GROUPS = [2, 3, 2, 2];
+  const phoneDigits = (raw) => {
+    let d = raw.replace(/\D/g, '');
+    if (d.startsWith('380')) d = d.slice(3);
+    if (d.startsWith('0')) d = d.slice(1); // 095… → 95…
+    return d.slice(0, 9);
+  };
+  const formatPhone = (d) => {
+    let out = '+380'; let i = 0;
+    for (const len of PHONE_GROUPS) { if (i >= d.length) break; out += ` ${d.slice(i, i + len)}`; i += len; }
+    return out;
+  };
+  // Позиція курсора після n-ї цифри номера у відформатованому рядку
+  const caretAfter = (formatted, n) => {
+    if (n === 0) return Math.min(formatted.length, 5);
+    let seen = 0;
+    for (let i = 4; i < formatted.length; i += 1) if (/\d/.test(formatted[i]) && (seen += 1) === n) return i + 1;
+    return formatted.length;
+  };
+  let lastPhone = '';
+  const applyPhoneMask = (e) => {
+    const input = fields.contact;
+    const caret = input.selectionStart ?? input.value.length;
+    let digits = phoneDigits(input.value);
+    let before = phoneDigits(input.value.slice(0, caret)).length;
+    // Backspace по пробілу: цифри не змінились — видаляємо цифру перед курсором
+    if (e && e.inputType === 'deleteContentBackward' && digits === phoneDigits(lastPhone) && before > 0) {
+      digits = digits.slice(0, before - 1) + digits.slice(before); before -= 1;
+    }
+    const deleting = e && e.inputType && e.inputType.startsWith('delete');
+    const next = digits || !deleting ? formatPhone(digits) : '';
+    input.value = next; lastPhone = next;
+    if (document.activeElement === input) { const pos = caretAfter(next, before); input.setSelectionRange(pos, pos); }
   };
 
   // Помилки зберігаються як ключі, щоб перекладатися при зміні мови
-  const setError = (input, key) => {
+  function setError(input, key) {
     const field = input.closest('.field');
     const err = field.querySelector('.field__err');
     field.classList.toggle('is-invalid', Boolean(key));
     input.setAttribute('aria-invalid', key ? 'true' : 'false');
     if (err) { err.dataset.msg = key || ''; err.textContent = key ? t(key) : ''; }
+  }
+
+  const setMode = (next, { focus = false } = {}) => {
+    values[mode] = fields.contact.value;
+    mode = next;
+    contactField.dataset.mode = mode;
+    Object.entries(MODES[mode]).forEach(([attr, val]) => fields.contact.setAttribute(attr, val));
+    contactField.querySelectorAll('[data-mode-label]').forEach((el) => { el.hidden = el.dataset.modeLabel !== mode; });
+    form.querySelector(`input[name="contactType"][value="${mode}"]`).checked = true;
+    fields.contact.value = values[mode];
+    lastPhone = mode === 'phone' ? fields.contact.value : '';
+    setError(fields.contact, '');
+    if (focus) fields.contact.focus();
+  };
+
+  const contactError = () => {
+    const v = fields.contact.value.trim();
+    if (mode === 'phone') {
+      const n = phoneDigits(v).length;
+      if (n === 0) return 'msg.phoneRequired';
+      return n === 9 ? '' : 'msg.phoneInvalid';
+    }
+    if (!v) return 'msg.emailRequired';
+    return EMAIL_RE.test(v) ? '' : 'msg.emailInvalid';
   };
 
   const validate = () => {
     let firstBad = null;
-    const name = fields.name.value.trim();
-    const contact = fields.contact.value.trim();
-
-    if (name.length < 2) { setError(fields.name, 'msg.nameRequired'); firstBad ||= fields.name; }
+    if (fields.name.value.trim().length < 2) { setError(fields.name, 'msg.nameRequired'); firstBad ||= fields.name; }
     else setError(fields.name, '');
 
-    if (!contact) { setError(fields.contact, 'msg.contactRequired'); firstBad ||= fields.contact; }
-    else if (!(EMAIL_RE.test(contact) || isPhone(contact))) { setError(fields.contact, 'msg.contactInvalid'); firstBad ||= fields.contact; }
-    else setError(fields.contact, '');
+    const contactErr = contactError();
+    setError(fields.contact, contactErr);
+    if (contactErr) firstBad ||= fields.contact;
 
     if (!fields.consent.checked) { setError(fields.consent, 'msg.consentRequired'); firstBad ||= fields.consent; }
     else setError(fields.consent, '');
@@ -391,20 +662,46 @@
 
   // Чернетка зберігається, щоб дані не губилися при помилці чи перезавантаженні
   const saveDraft = () => {
+    values[mode] = fields.contact.value;
     try {
       sessionStorage.setItem(STORE_KEY, JSON.stringify({
-        name: fields.name.value, contact: fields.contact.value, message: fields.message.value,
+        name: fields.name.value, phone: values.phone, email: values.email, mode, message: fields.message.value,
       }));
     } catch (_) { /* сховище недоступне */ }
   };
   try {
     const draft = JSON.parse(sessionStorage.getItem(STORE_KEY) || 'null');
-    if (draft) Object.keys(draft).forEach((k) => { if (fields[k]) fields[k].value = draft[k] || ''; });
+    if (draft) {
+      fields.name.value = draft.name || '';
+      fields.message.value = draft.message || '';
+      values.phone = draft.phone || ''; values.email = draft.email || '';
+      mode = draft.mode === 'email' ? 'email' : 'phone';
+      fields.contact.value = values[mode];
+    }
   } catch (_) { /* ігноруємо */ }
+  setMode(mode);
 
+  // Після кліку/тапу курсор переходить у поле; з клавіатури фокус лишається на перемикачі (стрілки працюють далі)
+  let pointerSwitch = false;
+  contactField.querySelector('.seg').addEventListener('pointerdown', () => { pointerSwitch = true; });
+  form.querySelectorAll('input[name="contactType"]').forEach((radio) => radio.addEventListener('change', () => {
+    if (radio.checked) { setMode(radio.value, { focus: pointerSwitch }); saveDraft(); }
+    pointerSwitch = false;
+  }));
+  fields.contact.addEventListener('focus', () => {
+    if (mode === 'phone' && !fields.contact.value) { fields.contact.value = '+380 '; lastPhone = fields.contact.value; }
+  });
+  fields.contact.addEventListener('input', (e) => { if (mode === 'phone') applyPhoneMask(e); });
   ['name', 'contact', 'message'].forEach((k) => fields[k].addEventListener('input', saveDraft));
-  ['name', 'contact'].forEach((k) => fields[k].addEventListener('blur', () => {
-    if (fields[k].closest('.field').classList.contains('is-invalid')) validate();
+  // Порожній префікс не лишаємо; помилку показуємо при виході з поля, а виправлену прибираємо одразу під час введення
+  fields.contact.addEventListener('blur', () => {
+    if (mode === 'phone' && phoneDigits(fields.contact.value).length === 0) { fields.contact.value = ''; lastPhone = ''; }
+    if (fields.contact.value.trim()) setError(fields.contact, contactError());
+  });
+  fields.name.addEventListener('blur', () => { if (fields.name.closest('.field').classList.contains('is-invalid')) validate(); });
+  ['name', 'contact'].forEach((k) => fields[k].addEventListener('input', () => {
+    if (!fields[k].closest('.field').classList.contains('is-invalid')) return;
+    if (k === 'name' ? fields.name.value.trim().length >= 2 : !contactError()) setError(fields[k], '');
   }));
   fields.consent.addEventListener('change', () => { if (fields.consent.checked) setError(fields.consent, ''); });
 
@@ -414,9 +711,19 @@
     const { type, keys } = statusState;
     status.className = `form__status is-${type}`;
     const contacts = '<a href="tel:+380952707611">+380 95 270 7611</a> · <a href="mailto:hello@ugp.ua">hello@ugp.ua</a>';
-    status.innerHTML = keys.map(t).join(' ') + (type === 'error' ? ` ${contacts}.` : '');
+    const [title, ...rest] = keys.map(t);
+    status.innerHTML = `<svg class="ico" aria-hidden="true"><use href="#i-${type === 'ok' ? 'check' : 'alert'}"/></svg>`
+      + `<div><strong>${title}</strong>${rest.join(' ')}${type === 'error' ? ` ${contacts}` : ''}</div>`;
   };
   const showStatus = (type, ...keys) => { statusState = { type, keys }; renderStatus(); };
+
+  // Під час надсилання кнопка вимкнена й показує спінер
+  const setSending = (on) => {
+    submitBtn.disabled = on;
+    submitBtn.querySelector('.form__submit-idle').hidden = on;
+    submitBtn.querySelector('.form__submit-busy').hidden = !on;
+    if (on) form.setAttribute('aria-busy', 'true'); else form.removeAttribute('aria-busy');
+  };
 
   document.addEventListener('ugp:lang', () => {
     form.querySelectorAll('.field__err').forEach((err) => { if (err.dataset.msg) err.textContent = t(err.dataset.msg); });
@@ -443,17 +750,15 @@
       return;
     }
 
-    form.classList.add('is-sending');
-    form.setAttribute('aria-busy', 'true');
+    setSending(true);
     try {
-      const contact = fields.contact.value.trim();
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
           name: fields.name.value.trim(),
-          contact,
-          contactType: EMAIL_RE.test(contact) ? 'email' : 'phone',
+          contact: mode === 'phone' ? `+380${phoneDigits(fields.contact.value)}` : fields.contact.value.trim(),
+          contactType: mode,
           message: fields.message.value.trim(),
           consent: true,
           lang,
@@ -463,13 +768,14 @@
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       form.reset();
+      values.phone = ''; values.email = ''; setMode('phone');
       try { sessionStorage.removeItem(STORE_KEY); } catch (_) { /* ігноруємо */ }
-      showStatus('ok', 'msg.success');
+      showStatus('ok', 'msg.successTitle', 'msg.success');
     } catch (_) {
+      // Введені дані лишаються у формі
       showStatus('error', 'msg.sendFailed', 'msg.fallback');
     } finally {
-      form.classList.remove('is-sending');
-      form.removeAttribute('aria-busy');
+      setSending(false);
     }
   });
 })();

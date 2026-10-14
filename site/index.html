@@ -63,6 +63,7 @@
   <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
   <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="1" fill="currentColor"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5 9 17 20 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.5v5.5M12 16.3v.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
   <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z M3 13l9 5 9-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
   <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="9" cy="9.5" r="1.8" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m4 18 5-5 4 4 3-3 4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
@@ -129,18 +130,18 @@
   <!-- 1. HERO -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="container hero__head">
-      <h1 id="hero-title" class="hero__title reveal" data-i18n="hero.title">Реалізація <span class="pill">інвестиційних</span> проєктів в&nbsp;Україні</h1>
-      <div class="hero__aside reveal">
-        <p class="hero__audience"><span data-i18n="hero.aud1">Інвесторам</span><span data-i18n="hero.aud2">Власникам</span><span data-i18n="hero.aud3">Девелоперам</span></p>
-        <p class="hero__lead" data-i18n="hero.lead">Від аналізу до працюючого активу. Організовуємо, контролюємо, відповідаємо за&nbsp;погоджений результат.</p>
-        <a class="btn btn--dark" href="#contact-form"><span data-i18n="cta.discuss">Обговорити проєкт</span> <svg class="ico"><use href="#i-arrow"/></svg></a>
+      <h1 id="hero-title" class="hero__title" data-i18n="hero.title">Реалізація <span class="pill">інвестиційних</span> проєктів в&nbsp;Україні</h1>
+      <div class="hero__aside">
+        <p class="hero__audience hi" style="--hd:.35s"><span data-i18n="hero.aud1">Інвесторам</span><span data-i18n="hero.aud2">Власникам</span><span data-i18n="hero.aud3">Девелоперам</span></p>
+        <p class="hero__lead hi" style="--hd:.5s" data-i18n="hero.lead">Від аналізу до працюючого активу. Організовуємо, контролюємо, відповідаємо за&nbsp;погоджений результат.</p>
+        <a class="btn btn--dark hi" style="--hd:.65s" href="#contact-form"><span data-i18n="cta.discuss">Обговорити проєкт</span> <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
     <div class="hero__gallery">
-      <figure class="hero__photo photo-zoom reveal"><img src="assets/img/hero-concrete.jpg" data-i18n-attr="alt:alt.heroConcrete" alt="Будівництво висотного об'єкта з баштовими кранами" width="1800" height="1200" fetchpriority="high"></figure>
-      <figure class="hero__photo photo-zoom reveal">
-        <img src="assets/img/crane.jpg" data-i18n-attr="alt:alt.crane" alt="Баштовий кран над каркасом будівлі, що зводиться" width="1200" height="1800">
-        <div class="hero__badge">
+      <figure class="hero__photo photo-zoom hi" style="--hd:.8s"><img src="assets/img/hero-concrete.jpg" srcset="assets/img/hero-concrete-600.jpg 600w, assets/img/hero-concrete-1200.jpg 1200w, assets/img/hero-concrete.jpg 1800w" sizes="(max-width: 600px) 100vw, (max-width: 900px) 70vw, 490px" data-i18n-attr="alt:alt.heroConcrete" alt="Будівництво висотного об'єкта з баштовими кранами" width="1800" height="1200" fetchpriority="high"></figure>
+      <figure class="hero__photo photo-zoom hi" style="--hd:.92s">
+        <img src="assets/img/crane.jpg" srcset="assets/img/crane-600.jpg 600w, assets/img/crane.jpg 1200w" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 400px" data-i18n-attr="alt:alt.crane" alt="Баштовий кран над каркасом будівлі, що зводиться" width="1200" height="1800">
+        <div class="hero__badge hi" style="--hd:1.25s">
           <svg class="hero__badge-ico" aria-hidden="true"><use href="#i-chat"/></svg>
           <div>
             <span class="hero__badge-kicker" data-i18n="hero.badgeKicker">Перший крок</span>
@@ -149,7 +150,7 @@
           </div>
         </div>
       </figure>
-      <figure class="hero__photo photo-zoom reveal"><img src="assets/img/engineer.jpg" data-i18n-attr="alt:alt.engineer" alt="Інженер на будівельному майданчику з документацією" width="1800" height="1200"></figure>
+      <figure class="hero__photo photo-zoom hi" style="--hd:1.04s"><img src="assets/img/engineer.jpg" srcset="assets/img/engineer-600.jpg 600w, assets/img/engineer-1200.jpg 1200w, assets/img/engineer.jpg 1800w" sizes="(max-width: 900px) 70vw, 490px" data-i18n-attr="alt:alt.engineer" alt="Інженер на будівельному майданчику з документацією" width="1800" height="1200" loading="lazy"></figure>
     </div>
     <div class="tasks">
       <div class="container strip">
@@ -176,60 +177,60 @@
       </div>
 
       <article class="feature reveal">
-        <div class="feature__media photo-zoom"><img src="assets/img/concrete-frame.jpg" data-i18n-attr="alt:alt.concreteFrame" alt="Бетонний каркас багатоповерхової будівлі" loading="lazy" width="1200" height="1800"></div>
+        <div class="feature__media photo-zoom"><img src="assets/img/concrete-frame.jpg" srcset="assets/img/concrete-frame-600.jpg 600w, assets/img/concrete-frame.jpg 1200w" sizes="(max-width: 900px) 100vw, 500px" data-i18n-attr="alt:alt.concreteFrame" alt="Бетонний каркас багатоповерхової будівлі" loading="lazy" width="1200" height="1800"></div>
         <div class="feature__body">
           <p class="feature__kicker" data-i18n="feature.kicker">Основний формат співпраці</p>
           <h3 class="feature__title" data-i18n="feature.title">Комплексна реалізація</h3>
           <p class="feature__text" data-i18n="feature.text">Погоджений результат — працюючий актив. Ведемо проєкт від перевірки до передачі.</p>
           <ol class="steps-list">
-            <li><span>01</span><b data-i18n="feature.s1">Due Diligence</b></li>
-            <li><span>02</span><b data-i18n="feature.s2">Дорожня карта виконання</b></li>
-            <li><span>03</span><b data-i18n="feature.s3">Організація роботи учасників</b></li>
-            <li><span>04</span><b data-i18n="feature.s4">Координація та контроль</b></li>
-            <li><span>05</span><b data-i18n="feature.s5">Введення в експлуатацію</b></li>
-            <li><span>06</span><b data-i18n="feature.s6">Передача активу інвестору або оператору</b></li>
+            <li class="reveal"><span>01</span><b data-i18n="feature.s1">Due Diligence</b></li>
+            <li class="reveal"><span>02</span><b data-i18n="feature.s2">Дорожня карта виконання</b></li>
+            <li class="reveal"><span>03</span><b data-i18n="feature.s3">Організація роботи учасників</b></li>
+            <li class="reveal"><span>04</span><b data-i18n="feature.s4">Координація та контроль</b></li>
+            <li class="reveal"><span>05</span><b data-i18n="feature.s5">Введення в експлуатацію</b></li>
+            <li class="reveal"><span>06</span><b data-i18n="feature.s6">Передача активу інвестору або оператору</b></li>
           </ol>
           <p class="feature__note" data-i18n="feature.note">За запитом інвестора також оцінюємо можливості в суміжних сегментах.</p>
-          <a class="btn btn--dark" href="#contact-form"><span data-i18n="cta.discuss">Обговорити проєкт</span> <svg class="ico"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--dark" href="#contact-form"><span data-i18n="cta.discuss">Обговорити проєкт</span> <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
       </article>
 
       <h3 class="subhead reveal" data-i18n="services.subhead">Окремі компетенції</h3>
       <div class="svc-grid">
-        <article class="svc reveal">
+        <article class="svc lift reveal">
           <span class="svc__num">01</span>
           <h4 class="svc__title" data-i18n="svc1.title">Due Diligence</h4>
           <p class="svc__text" data-i18n="svc1.text">Перевірка активу, прав, обмежень, ризиків та інвестиційних передумов.</p>
           <p class="svc__result"><span data-i18n="svc.result">Результат</span><b data-i18n="svc1.result">Висновки для інвестиційного рішення та сценарії реалізації.</b></p>
         </article>
-        <figure class="svc svc--photo photo-zoom reveal"><img src="assets/img/team-meeting.jpg" data-i18n-attr="alt:alt.teamMeeting" alt="Робоча нарада учасників проєкту" loading="lazy" width="1800" height="1013"></figure>
-        <article class="svc reveal">
+        <figure class="svc svc--photo photo-zoom reveal"><img src="assets/img/team-meeting.jpg" srcset="assets/img/team-meeting-600.jpg 600w, assets/img/team-meeting-1200.jpg 1200w, assets/img/team-meeting.jpg 1800w" sizes="(max-width: 1100px) 1px, 600px" data-i18n-attr="alt:alt.teamMeeting" alt="Робоча нарада учасників проєкту" loading="lazy" width="1800" height="1013"></figure>
+        <article class="svc lift reveal">
           <span class="svc__num">02</span>
           <h4 class="svc__title" data-i18n="svc2.title">GR та регуляторні рішення</h4>
           <p class="svc__text" data-i18n="svc2.text">Взаємодія з органами державної влади та місцевого самоврядування.</p>
           <p class="svc__result"><span data-i18n="svc.result">Результат</span><b data-i18n="svc2.result">Регуляторна дорожня карта та представлення інтересів.</b></p>
         </article>
-        <article class="svc reveal">
+        <article class="svc lift reveal">
           <span class="svc__num">03</span>
           <h4 class="svc__title" data-i18n="svc3.title">Взаємодія з громадами та стейкхолдерами</h4>
           <p class="svc__text" data-i18n="svc3.text">Діалог із громадами, комунікація та репутаційний менеджмент.</p>
           <p class="svc__result"><span data-i18n="svc.result">Результат</span><b data-i18n="svc3.result">План взаємодії та зрозуміла позиція проєкту.</b></p>
         </article>
-        <article class="svc reveal">
+        <article class="svc lift reveal">
           <span class="svc__num">04</span>
           <h4 class="svc__title" data-i18n="svc4.title">Врегулювання спорів та медіація</h4>
           <p class="svc__text" data-i18n="svc4.text">Переговори, медіація, судовий супровід адвокатом-партнером.</p>
           <p class="svc__result"><span data-i18n="svc.result">Результат</span><b data-i18n="svc4.result">Стратегія врегулювання та захист інтересів клієнта.</b></p>
         </article>
-        <figure class="svc svc--photo photo-zoom reveal"><img src="assets/img/signing-team.jpg" data-i18n-attr="alt:alt.signingTeam" alt="Переговори та підписання документів" loading="lazy" width="1800" height="1013"></figure>
-        <figure class="svc svc--photo photo-zoom reveal"><img src="assets/img/land-aerial.jpg" data-i18n-attr="alt:alt.landAerial" alt="Земельні ділянки, вигляд згори" loading="lazy" width="1200" height="899"></figure>
-        <article class="svc reveal">
+        <figure class="svc svc--photo photo-zoom reveal"><img src="assets/img/signing-team.jpg" srcset="assets/img/signing-team-600.jpg 600w, assets/img/signing-team-1200.jpg 1200w, assets/img/signing-team.jpg 1800w" sizes="(max-width: 1100px) 1px, 640px" data-i18n-attr="alt:alt.signingTeam" alt="Переговори та підписання документів" loading="lazy" width="1800" height="1013"></figure>
+        <figure class="svc svc--photo photo-zoom reveal"><img src="assets/img/land-aerial.jpg" srcset="assets/img/land-aerial-600.jpg 600w, assets/img/land-aerial.jpg 1200w" sizes="(max-width: 1100px) 1px, 520px" data-i18n-attr="alt:alt.landAerial" alt="Земельні ділянки, вигляд згори" loading="lazy" width="1200" height="899"></figure>
+        <article class="svc lift reveal">
           <span class="svc__num">05</span>
           <h4 class="svc__title" data-i18n="svc5.title">Земельне, аграрне та екологічне право</h4>
           <p class="svc__text" data-i18n="svc5.text">Права на землю, цільове призначення, екологічні обмеження.</p>
           <p class="svc__result"><span data-i18n="svc.result">Результат</span><b data-i18n="svc5.result">Правові рішення для використання активу.</b></p>
         </article>
-        <article class="svc reveal">
+        <article class="svc lift reveal">
           <span class="svc__num">06</span>
           <h4 class="svc__title" data-i18n="svc6.title">Організація девелоперського проєкту</h4>
           <p class="svc__text" data-i18n="svc6.text">Модель проєкту, склад учасників, координація проєктних і дозвільних завдань.</p>
@@ -240,14 +241,14 @@
   </section>
 
   <!-- 3. CTA -->
-  <section class="cta sheet" aria-labelledby="cta1-title">
-    <img class="cta__bg" src="assets/img/handshake.jpg" alt="" loading="lazy" width="1800" height="1200">
+  <section class="cta sheet" aria-labelledby="cta1-title" data-inview>
+    <img class="cta__bg" src="assets/img/handshake.jpg" srcset="assets/img/handshake-600.jpg 600w, assets/img/handshake-1200.jpg 1200w, assets/img/handshake.jpg 1800w" sizes="(max-width: 600px) 450px, 100vw" alt="" loading="lazy" width="1800" height="1200">
     <div class="container cta__wrap">
       <div class="cta__panel reveal">
         <p class="eyebrow eyebrow--light" data-i18n="cta1.eyebrow">Перший крок</p>
         <h2 id="cta1-title" data-i18n="cta1.title">Обговорімо <span class="tone">ваш проєкт</span></h2>
         <p data-i18n="cta1.text">Почнемо з вашого завдання. Визначимо формат роботи та наступні кроки. Первинна консультація — без зобов’язань.</p>
-        <a class="btn btn--light" href="#contact-form"><span data-i18n="cta.discuss">Обговорити проєкт</span> <svg class="ico"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--light" href="#contact-form"><span data-i18n="cta.discuss">Обговорити проєкт</span> <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
   </section>
@@ -260,13 +261,13 @@
           <p class="eyebrow eyebrow--light" data-i18n="why.eyebrow">Чому UGP</p>
           <h2 id="why-title" data-i18n="why.title">Організовуємо, управляємо та контролюємо виконання проєкту</h2>
         </div>
-        <a class="btn btn--light" href="#contact-form"><span data-i18n="cta.request">Надіслати запит</span> <svg class="ico"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--light" href="#contact-form"><span data-i18n="cta.discuss">Обговорити проєкт</span> <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="why">
-        <figure class="why__media photo-zoom reveal"><img src="assets/img/meeting-cafe.jpg" data-i18n-attr="alt:alt.meetingCafe" alt="Ділова зустріч щодо проєкту" loading="lazy" width="1800" height="1013"></figure>
+        <figure class="why__media photo-zoom reveal"><img src="assets/img/meeting-cafe.jpg" srcset="assets/img/meeting-cafe-600.jpg 600w, assets/img/meeting-cafe-1200.jpg 1200w, assets/img/meeting-cafe.jpg 1800w" sizes="(max-width: 900px) 100vw, 1040px" data-i18n-attr="alt:alt.meetingCafe" alt="Ділова зустріч щодо проєкту" loading="lazy" width="1800" height="1013"></figure>
         <div class="why__body">
           <p class="why__lead reveal" data-i18n="why.lead">Оцінюємо, чи можлива реалізація. Виявлені перешкоди обговорюємо до основних інвестицій і початку основних робіт.</p>
-          <ul class="why__list">
+          <ul class="why__list rules" data-inview>
             <li class="reveal">
               <span class="why__ico"><svg class="ico"><use href="#i-target"/></svg></span>
               <div><h3 data-i18n="why.i1Title">Success fee — винагорода за результат</h3><p data-i18n="why.i1Text">Критерії та умови — у договорі.</p></div>
@@ -304,7 +305,7 @@
           <h2 id="process-title" data-i18n="process.title">Від первинної оцінки <span class="tone">до передачі активу</span></h2>
         </div>
       </div>
-      <ol class="process">
+      <ol class="process" data-inview>
         <li class="step reveal"><span class="step__num">1</span><h3 data-i18n="process.s1Title">Первинна оцінка</h3><p data-i18n="process.s1Text">Оцінюємо, чи можлива реалізація проєкту.</p></li>
         <li class="step reveal"><span class="step__num">2</span><h3 data-i18n="process.s2Title">Варіанти реалізації</h3><p data-i18n="process.s2Text">Опрацьовуємо варіанти та обговорюємо перешкоди до основних інвестицій.</p></li>
         <li class="step reveal"><span class="step__num">3</span><h3 data-i18n="process.s3Title">Дорожня карта</h3><p data-i18n="process.s3Text">Визначаємо відповідальних, строки та контрольні точки.</p></li>
@@ -323,18 +324,18 @@
         <div class="about__body">
           <h2 id="about-title" class="reveal" data-i18n="about.title">Партнер з реалізації інвестиційних і девелоперських проєктів <span class="tone">в&nbsp;Україні</span></h2>
           <p class="about__text reveal" data-i18n="about.text">Ми оцінюємо можливість реалізації, формуємо дорожню карту, організовуємо роботу профільних фахівців і контролюємо виконання до погодженого результату.</p>
-          <ul class="about__points">
+          <ul class="about__points rules" data-inview>
             <li class="reveal"><svg class="ico"><use href="#i-shield"/></svg><div><h3 data-i18n="about.p1Title">Експертиза в одній команді</h3><p data-i18n="about.p1Text">Юридична, девелоперська, управлінська та репутаційна експертиза працюють на реалізацію проєкту.</p></div></li>
             <li class="reveal"><svg class="ico"><use href="#i-chat"/></svg><div><h3 data-i18n="about.p2Title">Українська та англійська</h3><p data-i18n="about.p2Text">Працюємо з українськими інвесторами й розвиваємо роботу з іноземними.</p></div></li>
           </ul>
           <a class="dot-link reveal" href="#team"><i aria-hidden="true"></i><span data-i18n="about.link">Познайомитися з партнерами</span></a>
         </div>
-        <figure class="about__media photo-zoom reveal"><img src="assets/img/kyiv-podil.jpg" data-i18n-attr="alt:alt.kyivPodil" alt="Київ, вид на Поділ і Дніпро" loading="lazy" width="1800" height="840"></figure>
+        <figure class="about__media photo-zoom reveal"><img src="assets/img/kyiv-podil.jpg" srcset="assets/img/kyiv-podil-600.jpg 600w, assets/img/kyiv-podil-1200.jpg 1200w, assets/img/kyiv-podil.jpg 1800w" sizes="(max-width: 900px) 134vw, 1460px" data-i18n-attr="alt:alt.kyivPodil" alt="Київ, вид на Поділ і Дніпро" loading="lazy" width="1800" height="840"></figure>
       </div>
 
       <div class="exp">
         <p class="exp__intro reveal" data-i18n="exp.intro"><strong>Спираємося на багаторічний досвід партнерів</strong> у реалізації проєктів в Україні.</p>
-        <div class="exp__grid">
+        <div class="exp__grid" data-inview>
           <div class="exp__item reveal">
             <p class="exp__num">20</p>
             <div><p class="exp__unit" data-i18n="exp.years">років</p><h3 data-i18n="exp.t1Title">Адвокатська практика</h3><p data-i18n="exp.t1Text">Нерухомість, земельне<br>та інвестиційне право.</p></div>
@@ -363,9 +364,9 @@
       </div>
       <!-- Типові сценарії на основі брифу (не історії конкретних клієнтів). Тексти погодити з замовником. -->
       <div class="cases">
-        <article class="case reveal">
+        <article class="case lift reveal">
           <!-- DEMO — replace with real data before launch (AI photo) -->
-          <figure class="case__media photo-zoom"><img src="assets/img/case-1.jpg" data-i18n-attr="alt:case1.alt" alt="Житловий будинок на етапі будівництва" loading="lazy" width="1600" height="893"></figure>
+          <figure class="case__media photo-zoom"><img src="assets/img/case-1.jpg" srcset="assets/img/case-1-600.jpg 600w, assets/img/case-1-1200.jpg 1200w, assets/img/case-1.jpg 1600w" sizes="(max-width: 900px) 120vw, 440px" data-i18n-attr="alt:case1.alt" alt="Житловий будинок на етапі будівництва" loading="lazy" width="1600" height="893"></figure>
           <div class="case__body">
             <p class="case__tag"><span>01</span><b data-i18n="case1.tag">Відновлення проєкту</b></p>
             <h3 class="case__title" data-i18n="case1.title">Відновлення зупиненого житлового проєкту</h3>
@@ -376,9 +377,9 @@
             </dl>
           </div>
         </article>
-        <article class="case reveal">
+        <article class="case lift reveal">
           <!-- DEMO — replace with real data before launch (AI photo) -->
-          <figure class="case__media photo-zoom"><img src="assets/img/case-2.jpg" data-i18n-attr="alt:case2.alt" alt="Сучасний бізнес-центр" loading="lazy" width="1600" height="893"></figure>
+          <figure class="case__media photo-zoom"><img src="assets/img/case-2.jpg" srcset="assets/img/case-2-600.jpg 600w, assets/img/case-2-1200.jpg 1200w, assets/img/case-2.jpg 1600w" sizes="(max-width: 900px) 120vw, 440px" data-i18n-attr="alt:case2.alt" alt="Сучасний бізнес-центр" loading="lazy" width="1600" height="893"></figure>
           <div class="case__body">
             <p class="case__tag"><span>02</span><b data-i18n="case2.tag">Due Diligence</b></p>
             <h3 class="case__title" data-i18n="case2.title">Перевірка бізнес-центру перед інвестуванням</h3>
@@ -389,9 +390,9 @@
             </dl>
           </div>
         </article>
-        <article class="case reveal">
+        <article class="case lift reveal">
           <!-- DEMO — replace with real data before launch (AI photo) -->
-          <figure class="case__media photo-zoom"><img src="assets/img/case-3.jpg" data-i18n-attr="alt:case3.alt" alt="Житловий комплекс із благоустроєним двором" loading="lazy" width="1600" height="893"></figure>
+          <figure class="case__media photo-zoom"><img src="assets/img/case-3.jpg" srcset="assets/img/case-3-600.jpg 600w, assets/img/case-3-1200.jpg 1200w, assets/img/case-3.jpg 1600w" sizes="(max-width: 900px) 120vw, 440px" data-i18n-attr="alt:case3.alt" alt="Житловий комплекс із благоустроєним двором" loading="lazy" width="1600" height="893"></figure>
           <div class="case__body">
             <p class="case__tag"><span>03</span><b data-i18n="case3.tag">Девелопмент</b></p>
             <h3 class="case__title" data-i18n="case3.title">Організація девелоперського проєкту житлового комплексу</h3>
@@ -407,7 +408,7 @@
   </section>
 
   <!-- 7. CTA — міжнародний напрям -->
-  <section class="intl sheet" aria-labelledby="intl-title">
+  <section class="intl sheet" aria-labelledby="intl-title" data-inview>
     <img class="intl__bg" src="assets/img/kyiv-sunset.jpg" alt="" loading="lazy" width="1800" height="1200">
     <div class="container">
       <h2 id="intl-title" class="intl__title reveal" data-i18n="intl.title">Ваш партнер в&nbsp;Україні</h2>
@@ -415,15 +416,15 @@
         <div class="intl__side reveal">
           <p class="intl__label"><i aria-hidden="true"></i><span data-i18n="intl.eyebrow">Міжнародний напрям</span></p>
           <p class="intl__chips"><span>NDA</span><span data-i18n="intl.chipLang">Українська та англійська мови</span></p>
-          <a class="btn btn--light" href="#contact-form"><span data-i18n="cta.discuss">Обговорити проєкт</span> <svg class="ico"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--light" href="#contact-form"><span data-i18n="cta.discuss">Обговорити проєкт</span> <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
         <p class="intl__text reveal" data-i18n="intl.text">Поточний фокус UGP — <span class="tone">український ринок, складні та зупинені проєкти.</span> Напрям розвитку — платформа реалізації проєктів в Україні <span class="tone">для міжнародного капіталу.</span> Звернення іноземних інвесторів можливі вже зараз.</p>
       </div>
-      <ol class="intl__rows reveal">
-        <li><span>(01)</span><b data-i18n="intl.s1">Структурування задуму: оцінка можливості реалізації, визначення або створення активу.</b></li>
-        <li><span>(02)</span><b data-i18n="intl.s2">Модель реалізації, організація та контроль виконання.</b></li>
-        <li><span>(03)</span><b data-i18n="intl.s3">Координація фахівців і взаємодія зі стейкхолдерами.</b></li>
-        <li><span>(04)</span><b data-i18n="intl.s4">Створення працюючого активу та передача інвестору або його представнику.</b></li>
+      <ol class="intl__rows rules" data-inview>
+        <li class="reveal"><span>(01)</span><b data-i18n="intl.s1">Структурування задуму: оцінка можливості реалізації, визначення або створення активу.</b></li>
+        <li class="reveal"><span>(02)</span><b data-i18n="intl.s2">Модель реалізації, організація та контроль виконання.</b></li>
+        <li class="reveal"><span>(03)</span><b data-i18n="intl.s3">Координація фахівців і взаємодія зі стейкхолдерами.</b></li>
+        <li class="reveal"><span>(04)</span><b data-i18n="intl.s4">Створення працюючого активу та передача інвестору або його представнику.</b></li>
       </ol>
     </div>
   </section>
@@ -438,7 +439,7 @@
         </div>
       </div>
       <ul class="team">
-        <li class="member reveal">
+        <li class="member lift reveal">
           <!-- DEMO — replace with real data before launch (AI photo + demo name below) -->
           <figure class="member__photo photo-zoom"><img src="assets/img/team-1.jpg" data-i18n-attr="alt:ph.partnerPhoto" alt="Фото партнера" loading="lazy" width="725" height="900"></figure>
           <div class="member__body">
@@ -447,7 +448,7 @@
             <p class="member__text" data-i18n="team.m1">Адвокатська практика. Нерухомість, земельне та інвестиційне право.</p>
           </div>
         </li>
-        <li class="member reveal">
+        <li class="member lift reveal">
           <!-- DEMO — replace with real data before launch (AI photo + demo name below) -->
           <figure class="member__photo photo-zoom"><img src="assets/img/team-2.jpg" data-i18n-attr="alt:ph.partnerPhoto" alt="Фото партнера" loading="lazy" width="725" height="900"></figure>
           <div class="member__body">
@@ -456,7 +457,7 @@
             <p class="member__text" data-i18n="team.m2">Реалізація. Девелопмент, інвестиції, управління. MBA kmbs.</p>
           </div>
         </li>
-        <li class="member reveal">
+        <li class="member lift reveal">
           <!-- DEMO — replace with real data before launch (AI photo + demo name below) -->
           <figure class="member__photo photo-zoom"><img src="assets/img/team-3.jpg" data-i18n-attr="alt:ph.partnerPhoto" alt="Фото партнера" loading="lazy" width="725" height="900"></figure>
           <div class="member__body">
@@ -471,8 +472,8 @@
 
   <!-- 9. З КИМ МИ ПРАЦЮЄМО (аудиторія та стейкхолдери з брифу) -->
   <section class="trust" aria-labelledby="trust-title">
-    <div class="container trust__inner">
-      <h2 id="trust-title" class="trust__label" data-i18n="trust.title">З ким ми працюємо</h2>
+    <div class="container trust__inner" data-inview>
+      <h2 id="trust-title" class="trust__label reveal" data-i18n="trust.title">З ким ми працюємо</h2>
       <ul class="trust__logos trust__logos--who">
         <li class="who reveal"><svg class="who__ico" aria-hidden="true"><use href="#w-investor"/></svg><span data-i18n="who.investors">Інвестори</span></li>
         <li class="who reveal"><svg class="who__ico" aria-hidden="true"><use href="#w-owner"/></svg><span data-i18n="who.owners">Власники активів</span></li>
@@ -501,41 +502,85 @@
   </section>
 
   <!-- 10. ВІДГУКИ (заглушки; лише реальні погоджені відгуки) -->
-  <section class="section section--stone sheet reviews" aria-labelledby="reviews-title">
+  <!-- Слайдер: фото й тексти з однаковим номером (data-slide) змінюються разом. Щоб додати відгук —
+       додайте <img> у .reviews__media і <figure> у .reviews__slides з наступним номером; лічильник і стрілки оновляться самі. -->
+  <section class="section section--stone sheet reviews" aria-labelledby="reviews-title" aria-roledescription="carousel" data-slider>
     <div class="container reviews__inner">
-      <!-- DEMO — replace with real data before launch (AI photo) -->
-      <figure class="reviews__media photo-zoom reveal"><img src="assets/img/review-1.jpg" data-i18n-attr="alt:ph.clientPhoto" alt="Фото клієнта" loading="lazy" width="800" height="993"></figure>
+      <!-- DEMO — replace with real data before launch (AI photos review-1…4.jpg) -->
+      <figure class="reviews__media photo-zoom reveal">
+        <img class="is-active" data-slide="0" src="assets/img/review-1.jpg" data-i18n-attr="alt:ph.clientPhoto" alt="Фото клієнта" loading="lazy" width="800" height="993">
+        <img data-slide="1" src="assets/img/review-2.jpg" data-i18n-attr="alt:ph.clientPhoto" alt="Фото клієнта" loading="lazy" width="800" height="993">
+        <img data-slide="2" src="assets/img/review-3.jpg" data-i18n-attr="alt:ph.clientPhoto" alt="Фото клієнта" loading="lazy" width="800" height="993">
+        <img data-slide="3" src="assets/img/review-4.jpg" data-i18n-attr="alt:ph.clientPhoto" alt="Фото клієнта" loading="lazy" width="800" height="993">
+      </figure>
       <div class="reviews__body">
         <p class="eyebrow reveal" data-i18n="reviews.eyebrow">Відгуки</p>
         <h2 id="reviews-title" class="visually-hidden" data-i18n="reviews.title">Відгуки клієнтів</h2>
         <svg class="reviews__mark reveal" aria-hidden="true"><use href="#i-quote"/></svg>
-        <figure class="reviews__figure reveal">
-          <!-- DEMO — replace with real data before launch (review text, name, position) -->
-          <blockquote class="reviews__quote">
-            <p data-i18n="reviews.quote">Наш житловий проєкт був зупинений, і ми не бачили, як рухатися далі. Команда UGP спершу чесно оцінила, що можливо, потім вибудувала дорожню карту й повернула підрядників до роботи. Найцінніше&nbsp;— ми завжди розуміли, що відбувається і хто за що відповідає.</p>
-          </blockquote>
-          <figcaption class="reviews__author">
-            <span class="reviews__name" data-i18n="reviews.name">Віктор Бондаренко</span>
-            <span class="reviews__pos" data-i18n="reviews.pos">Інвестор, девелоперська компанія</span>
-          </figcaption>
-        </figure>
+        <!-- DEMO — replace with real data before launch (review texts, names, positions) -->
+        <div class="reviews__slides reveal" aria-live="polite">
+          <figure class="reviews__figure is-active" data-slide="0" role="group" aria-roledescription="slide">
+            <blockquote class="reviews__quote">
+              <p data-i18n="reviews.quote1">Наш житловий проєкт був зупинений, і ми не бачили, як рухатися далі. Команда UGP спершу чесно оцінила, що можливо, потім вибудувала дорожню карту й повернула підрядників до роботи. Найцінніше&nbsp;— ми завжди розуміли, що відбувається і хто за що відповідає.</p>
+            </blockquote>
+            <figcaption class="reviews__author">
+              <span class="reviews__name" data-i18n="reviews.name1">Віктор Бондаренко</span>
+              <span class="reviews__pos" data-i18n="reviews.pos1">Інвестор, девелоперська компанія</span>
+            </figcaption>
+          </figure>
+          <figure class="reviews__figure" data-slide="1" role="group" aria-roledescription="slide">
+            <blockquote class="reviews__quote">
+              <p data-i18n="reviews.quote2">Перед інвестуванням ми попросили UGP незалежно перевірити об’єкт. Ризики, обмеження й питання з правами ми побачили ще до основних вкладень. Висновки були чіткими&nbsp;— і рішення ми ухвалювали, розуміючи всю картину.</p>
+            </blockquote>
+            <figcaption class="reviews__author">
+              <span class="reviews__name" data-i18n="reviews.name2">Олена Ткаченко</span>
+              <span class="reviews__pos" data-i18n="reviews.pos2">Приватна інвесторка</span>
+            </figcaption>
+          </figure>
+          <figure class="reviews__figure" data-slide="2" role="group" aria-roledescription="slide">
+            <blockquote class="reviews__quote">
+              <p data-i18n="reviews.quote3">Іноземному інвестору в Україні потрібен партнер, якому можна довіряти на місці. UGP допомогли структурувати задум і скоординували роботу фахівців та стейкхолдерів. Усе&nbsp;— під NDA й англійською, чітко й без зайвих формальностей.</p>
+            </blockquote>
+            <figcaption class="reviews__author">
+              <span class="reviews__name" data-i18n="reviews.name3">Томас Бреннер</span>
+              <span class="reviews__pos" data-i18n="reviews.pos3">Керуючий партнер, європейська інвестиційна група</span>
+            </figcaption>
+          </figure>
+          <figure class="reviews__figure" data-slide="3" role="group" aria-roledescription="slide">
+            <blockquote class="reviews__quote">
+              <p data-i18n="reviews.quote4">Ми мали землю, але не могли використовувати її так, як планували. UGP розібралися з правами, цільовим призначенням і дозволами та запропонували правові рішення, зрозумілі і нам, і органам влади. Тепер ми впевнено плануємо роботу на своїй землі.</p>
+            </blockquote>
+            <figcaption class="reviews__author">
+              <span class="reviews__name" data-i18n="reviews.name4">Микола Гнатюк</span>
+              <span class="reviews__pos" data-i18n="reviews.pos4">Власник агропідприємства</span>
+            </figcaption>
+          </figure>
+        </div>
+        <!-- Керування з’являється лише з JS; без JS видно перший відгук -->
+        <div class="reviews__nav reveal" hidden>
+          <button class="reviews__arrow" type="button" data-dir="-1" data-i18n-attr="aria-label:reviews.prev" aria-label="Попередній відгук"><svg class="ico" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
+          <button class="reviews__arrow" type="button" data-dir="1" data-i18n-attr="aria-label:reviews.next" aria-label="Наступний відгук"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <p class="reviews__count" aria-hidden="true"><b class="reviews__current">01</b> / <span class="reviews__total">04</span></p>
+          <span class="reviews__progress" aria-hidden="true"><i></i></span>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- 11. ФОРМА -->
   <section class="section section--white sheet" id="contact-form" aria-labelledby="form-title">
+    <!-- Надзаголовок — над обома колонками, тож форма починається на рівні заголовка й закінчується на рівні фото -->
     <div class="container contact">
+      <p class="eyebrow contact__eyebrow reveal" data-i18n="form.eyebrow">Зв’язок</p>
       <div class="contact__intro">
-        <p class="eyebrow reveal" data-i18n="form.eyebrow">Зв’язок</p>
         <h2 id="form-title" class="reveal" data-i18n="form.title">Обговорімо <span class="tone">ваш проєкт</span></h2>
         <p class="contact__text reveal" data-i18n="form.text">Первинна консультація — без зобов’язань. Для звернення достатньо імені та одного способу зв’язку — телефону або e-mail.</p>
-        <ul class="contact__notes reveal">
-          <li><svg class="ico"><use href="#i-check"/></svg><span data-i18n="form.note1">Короткий опис завдання — необов’язковий</span></li>
-          <li><svg class="ico"><use href="#i-shield"/></svg><span data-i18n="form.note2">Конфіденційні документи — після підписання NDA</span></li>
-          <li><svg class="ico"><use href="#i-chat"/></svg><span data-i18n="form.note3">Українська та англійська мови</span></li>
+        <ul class="contact__notes rules" data-inview>
+          <li class="reveal"><svg class="ico"><use href="#i-check"/></svg><span data-i18n="form.note1">Короткий опис завдання — необов’язковий</span></li>
+          <li class="reveal"><svg class="ico"><use href="#i-shield"/></svg><span data-i18n="form.note2">Конфіденційні документи — після підписання NDA</span></li>
+          <li class="reveal"><svg class="ico"><use href="#i-chat"/></svg><span data-i18n="form.note3">Українська та англійська мови</span></li>
         </ul>
-        <figure class="contact__media photo-zoom reveal"><img src="assets/img/document.jpg" data-i18n-attr="alt:alt.document" alt="Підписання документа" loading="lazy" width="1800" height="1200"></figure>
+        <figure class="contact__media photo-zoom reveal"><img src="assets/img/document.jpg" srcset="assets/img/document-600.jpg 600w, assets/img/document-1200.jpg 1200w, assets/img/document.jpg 1800w" sizes="(max-width: 900px) 100vw, 580px" data-i18n-attr="alt:alt.document" alt="Підписання документа" loading="lazy" width="1800" height="1200"></figure>
       </div>
 
       <!-- data-endpoint: адреса прийому заявок (CRM / пошта / Telegram-бот). Поки не задана — успіх не показується. -->
@@ -545,12 +590,23 @@
           <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="100" aria-describedby="f-name-err">
           <p class="field__err" id="f-name-err" aria-live="polite"></p>
         </div>
-        <div class="field">
-          <label for="f-contact"><span data-i18n="form.contact">Телефон або e-mail</span> <span aria-hidden="true">*</span></label>
-          <input id="f-contact" name="contact" type="text" autocomplete="email" inputmode="email" required maxlength="120" data-i18n-attr="placeholder:form.contactPh" placeholder="+380… або e-mail" aria-describedby="f-contact-err">
+        <!-- Спосіб зв’язку: перемикач «Телефон | E-mail» + одне поле. Тип поля, підпис, підказка й перевірка змінюються в main.js;
+             введене для кожного способу зберігається при перемиканні -->
+        <fieldset class="field field--contact" data-mode="phone">
+          <legend class="visually-hidden" data-i18n="form.contactWay">Спосіб зв’язку</legend>
+          <div class="field__row">
+            <label for="f-contact"><span data-i18n="form.phone" data-mode-label="phone">Телефон</span><span data-i18n="form.email" data-mode-label="email" hidden>E-mail</span> <span aria-hidden="true">*</span></label>
+            <div class="seg">
+              <input class="visually-hidden" type="radio" name="contactType" id="f-ct-phone" value="phone" checked>
+              <label for="f-ct-phone" data-i18n="form.phone">Телефон</label>
+              <input class="visually-hidden" type="radio" name="contactType" id="f-ct-email" value="email">
+              <label for="f-ct-email" data-i18n="form.email">E-mail</label>
+            </div>
+          </div>
+          <input id="f-contact" name="contact" type="tel" inputmode="tel" autocomplete="tel" required maxlength="17" placeholder="+380 XX XXX XX XX" aria-describedby="f-contact-err">
           <p class="field__err" id="f-contact-err" aria-live="polite"></p>
-        </div>
-        <div class="field">
+        </fieldset>
+        <div class="field field--grow">
           <label for="f-msg"><span data-i18n="form.message">Коротко про завдання</span> <span class="field__opt" data-i18n="form.optional">необов’язково</span></label>
           <textarea id="f-msg" name="message" rows="4" maxlength="2000"></textarea>
         </div>
@@ -560,10 +616,14 @@
         </div>
         <div class="field field--check">
           <input id="f-consent" name="consent" type="checkbox" required aria-describedby="f-consent-err">
-          <label for="f-consent" data-i18n="form.consent">Погоджуюся на обробку даних згідно з <a href="#" data-todo="privacy-policy">політикою конфіденційності</a></label>
+          <label for="f-consent" data-i18n="form.consent">Погоджуюся на обробку даних згідно з <a href="privacy.html">політикою конфіденційності</a></label>
           <p class="field__err" id="f-consent-err" aria-live="polite"></p>
         </div>
-        <button class="btn btn--dark btn--block" type="submit"><span data-i18n="cta.request">Надіслати запит</span> <svg class="ico"><use href="#i-arrow"/></svg></button>
+        <!-- Під час надсилання кнопка вимкнена, показує спінер і «Надсилаємо…» -->
+        <button class="btn btn--dark btn--block form__submit" type="submit">
+          <span class="form__submit-idle"><span data-i18n="cta.request">Надіслати запит</span> <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          <span class="form__submit-busy" hidden><i class="form__spinner" aria-hidden="true"></i><span data-i18n="form.sending">Надсилаємо…</span></span>
+        </button>
         <div class="form__status" role="status" aria-live="polite"></div>
       </form>
     </div>
@@ -580,40 +640,41 @@
         <p class="section-head__text" data-i18n="contacts.text">Мови спілкування — українська та англійська.</p>
       </div>
       <ul class="contacts">
-        <li class="reveal"><a class="contact-card" href="tel:+380952707611"><svg class="ico"><use href="#i-phone"/></svg><span class="contact-card__label" data-i18n="contacts.phone">Телефон</span><span class="contact-card__value">+380 95 270 7611</span></a></li>
-        <li class="reveal"><a class="contact-card" href="mailto:hello@ugp.ua"><svg class="ico"><use href="#i-mail"/></svg><span class="contact-card__label" data-i18n="contacts.email">E-mail</span><span class="contact-card__value">hello@ugp.ua</span></a></li>
-        <!-- TODO: точні посилання на Telegram і Viber надає замовник -->
-        <li class="reveal"><div class="contact-card"><svg class="ico"><use href="#i-chat"/></svg><span class="contact-card__label" data-i18n="contacts.messengers">Месенджери</span><span class="contact-card__value contact-card__links"><a href="#" data-todo="telegram">Telegram</a> <span aria-hidden="true">/</span> <a href="#" data-todo="viber">Viber</a></span></div></li>
-        <li class="reveal"><div class="contact-card"><svg class="ico"><use href="#i-pin"/></svg><span class="contact-card__label" data-i18n="contacts.city">Місто</span><span class="contact-card__value" data-i18n="contacts.kyiv">Київ</span></div></li>
+        <li class="reveal"><a class="contact-card lift" href="tel:+380952707611"><svg class="ico"><use href="#i-phone"/></svg><span class="contact-card__label" data-i18n="contacts.phone">Телефон</span><span class="contact-card__value contact-card__value--nowrap">+380&nbsp;95&nbsp;270&nbsp;7611</span></a></li>
+        <li class="reveal"><a class="contact-card lift" href="mailto:hello@ugp.ua"><svg class="ico"><use href="#i-mail"/></svg><span class="contact-card__label" data-i18n="contacts.email">E-mail</span><span class="contact-card__value">hello@ugp.ua</span></a></li>
+        <!-- Месенджери приховано, доки замовник не надасть посилання. Щоб увімкнути: прибрати hidden, вписати href замість "#",
+             прибрати data-todo, у .contacts повернути 4 колонки (див. style.css, «Контакти»), так само — рядок у футері. -->
+        <li class="reveal" hidden><div class="contact-card lift"><svg class="ico"><use href="#i-chat"/></svg><span class="contact-card__label" data-i18n="contacts.messengers">Месенджери</span><span class="contact-card__value contact-card__links"><a href="#" data-todo="telegram">Telegram</a> <span aria-hidden="true">/</span> <a href="#" data-todo="viber">Viber</a></span></div></li>
+        <li class="reveal"><div class="contact-card lift"><svg class="ico"><use href="#i-pin"/></svg><span class="contact-card__label" data-i18n="contacts.city">Місто</span><span class="contact-card__value" data-i18n="contacts.kyiv">Київ</span></div></li>
       </ul>
     </div>
   </section>
 
 </main>
 
-<footer class="footer sheet">
+<footer class="footer sheet" data-inview>
   <div class="container">
     <div class="footer__top">
-      <div class="footer__brand">
+      <div class="footer__brand reveal">
         <a class="logo logo--light" href="#top" data-i18n-attr="aria-label:a11y.logoTop" aria-label="UGP — на початок сторінки">
           <img class="logo__img" src="assets/brand/logo-header-light.svg" alt="UGP — Ukraine Gateway Partners" width="312" height="64" loading="lazy">
         </a>
         <p data-i18n="footer.tagline">Партнер з реалізації інвестиційних і девелоперських проєктів в&nbsp;Україні.</p>
       </div>
-      <nav class="footer__col" data-i18n-attr="aria-label:a11y.footerNav" aria-label="Розділи сайту">
+      <nav class="footer__col reveal" data-i18n-attr="aria-label:a11y.footerNav" aria-label="Розділи сайту">
         <p class="footer__head" data-i18n="footer.sections">Розділи</p>
-        <ul><li><a href="#services" data-i18n="nav.services">Послуги</a></li><li><a href="#why" data-i18n="nav.why">Чому UGP</a></li><li><a href="#about" data-i18n="nav.about">Про нас</a></li><li><a href="#team" data-i18n="nav.team">Команда</a></li></ul>
+        <ul><li><a href="#services" data-i18n="nav.services">Послуги</a></li><li><a href="#why" data-i18n="nav.why">Чому UGP</a></li><li><a href="#about" data-i18n="nav.about">Про нас</a></li><li><a href="#team" data-i18n="nav.team">Команда</a></li><li><a href="#contacts" data-i18n="nav.contacts">Контакти</a></li></ul>
       </nav>
-      <div class="footer__col">
+      <div class="footer__col reveal">
         <p class="footer__head" data-i18n="footer.work">Співпраця</p>
-        <ul><li><a href="#contact-form" data-i18n="cta.discuss">Обговорити проєкт</a></li><li><a href="#contact-form" data-i18n="cta.request">Надіслати запит</a></li><li><a href="#" data-todo="privacy-policy" data-i18n="footer.privacy">Політика конфіденційності</a></li></ul>
+        <ul><li><a href="#contact-form" data-i18n="cta.discuss">Обговорити проєкт</a></li><li><a href="privacy.html" data-i18n="footer.privacy">Політика конфіденційності</a></li></ul>
       </div>
-      <div class="footer__col">
+      <div class="footer__col reveal">
         <p class="footer__head" data-i18n="footer.contacts">Контакти</p>
-        <ul><li><a href="tel:+380952707611">+380 95 270 7611</a></li><li><a href="mailto:hello@ugp.ua">hello@ugp.ua</a></li><li>Telegram / Viber</li><li data-i18n="contacts.kyiv">Київ</li></ul>
+        <ul><li><a href="tel:+380952707611">+380 95 270 7611</a></li><li><a href="mailto:hello@ugp.ua">hello@ugp.ua</a></li><li hidden>Telegram / Viber</li><!-- приховано до отримання посилань --><li data-i18n="contacts.kyiv">Київ</li></ul>
       </div>
     </div>
-    <div class="footer__bottom">
+    <div class="footer__bottom reveal">
       <p>© <span data-year>2026</span> Ukraine Gateway Partners</p>
       <!-- TODO: юридична назва та код ЄДРПОУ — надає замовник -->
       <p class="footer__legal" data-i18n="footer.legal">Юридична назва · код ЄДРПОУ</p>
@@ -622,6 +683,9 @@
   </div>
   <p class="footer__wordmark" aria-hidden="true">Ukraine Gateway</p>
 </footer>
+
+<!-- Плаваюча кнопка на телефоні/планшеті: видима після hero, прихована, коли на екрані форма чи футер (main.js) -->
+<a class="sticky-cta" href="#contact-form" tabindex="-1" aria-hidden="true"><span data-i18n="cta.discuss">Обговорити проєкт</span> <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
 
 <script src="assets/js/vendor/lenis.min.js"></script><!-- Lenis 1.1.13 (MIT), плавна прокрутка -->
 <script src="assets/i18n/en.js"></script>
