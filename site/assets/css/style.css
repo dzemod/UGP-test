@@ -32,9 +32,9 @@
      Нові відступи беріть звідси, а не вигадуйте окремі числа. */
   --wrap: 1240px;
   --gutter: 32px;                                        /* бічні поля сторінки (24 на планшеті, 20 на телефоні) */
-  --section: clamp(96px, calc(76px + 5.2vw), 176px);     /* вертикальні поля секції: 96 → 151 (1440) → 176 (1920) */
+  --section: clamp(120px, calc(95px + 6.5vw), 220px);    /* вертикальні поля секції: 120 → 189 (1440) → 220 (1920); +25% до попередньої шкали */
   --section-sm: calc(var(--section) * .7);               /* менші блоки всередині секцій */
-  --strip-pad: max(96px, var(--section-sm));             /* стрічки «Завдання» / «Принципи», CTA, футер */
+  --strip-pad: max(120px, var(--section-sm));            /* стрічки «Завдання» / «Принципи», CTA, футер */
   --head-gap: clamp(48px, calc(40px + 2.1vw), 80px);     /* заголовок секції → вміст: 48 → 70 → 80 */
   --label-gap: 24px;                                     /* надзаголовок → заголовок */
   --text-gap: 32px;                                      /* заголовок → опис, опис → список, список → кнопка */
@@ -236,9 +236,36 @@ html.lang-out [data-i18n] { opacity: 0 !important; }
 .tasks__label { font-size: 14px; line-height: 1.5; letter-spacing: .14em; margin-bottom: var(--text-gap); }
 .tasks__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
 /* Кожен пункт — рівно два рядки: розрив задано <br>, усередині рядка перенос заборонено */
-.tasks__list li { display: flex; flex-direction: column; gap: 28px; padding: 24px 28px 8px; white-space: nowrap; hyphens: manual; overflow-wrap: normal; word-break: normal; border-left: 1px solid var(--dark-line); font: 300 21px/1.3 var(--serif); }
-.tasks__list li:first-child { border-left: 0; padding-left: 0; }
+/* Розділювач — фон-градієнт 1px (а не border), щоб його можна було «намалювати» зверху вниз; --pl — лівий відступ колонки (0 у першій) */
+.tasks__list li {
+  --pl: 28px; --line-size: 1px 100%;
+  position: relative; display: flex; flex-direction: column; gap: 28px; padding: 24px 28px 8px var(--pl);
+  white-space: nowrap; hyphens: manual; overflow-wrap: normal; word-break: normal; color: rgba(255,255,255,.9); font: 300 21px/1.3 var(--serif);
+  background: linear-gradient(var(--dark-line), var(--dark-line)) 0 0 / var(--line-size) no-repeat;
+}
+.tasks__list li:first-child { --pl: 0px; background-image: none; }
 .tasks__list .ico { width: 24px; height: 24px; color: var(--accent-dark); }
+
+/* Поява стрічки (один раз): підпис → розділювачі (0.6s) → пункти по черзі (+0.1s), іконки малюються лінією (0.8s). --i задає main.js */
+.js .strip .tasks__label { opacity: 0; transition: opacity .8s var(--ease); }
+.js .strip .tasks__list li { --line-size: 1px 0%; opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease) calc(.35s + var(--i, 0) * .1s), transform .8s var(--ease) calc(.35s + var(--i, 0) * .1s), background-size .6s var(--ease) .15s, color .4s var(--ease); }
+.js .strip .ico :is(path, rect, circle) { stroke-dasharray: 1 1; stroke-dashoffset: 1; transition: stroke-dashoffset .8s cubic-bezier(.45, 0, .25, 1) calc(.5s + var(--i, 0) * .1s); }
+.js .strip.is-in .tasks__label { opacity: 1; }
+.js .strip.is-in .tasks__list li { --line-size: 1px 100%; opacity: 1; transform: none; }
+.js .strip.is-in .ico :is(path, rect, circle) { stroke-dashoffset: 0; }
+
+/* Наведення (лише десктоп): іконка піднімається зі світінням, текст яскравіший, бронзова лінія зліва направо, ледь світліше тло колонки */
+.tasks__list li::before, .tasks__list li::after { content: ""; position: absolute; pointer-events: none; }
+.tasks__list li::before { inset: 0 0 -16px min(0px, calc(var(--pl) - 24px)); background: linear-gradient(rgba(255,255,255,.045), rgba(255,255,255,.012)); opacity: 0; transition: opacity .5s var(--ease); z-index: -1; }
+.tasks__list li::after { left: var(--pl); right: 28px; bottom: -16px; height: 1px; background: var(--accent-dark); transform: scaleX(0); transform-origin: left; transition: transform .6s var(--ease); }
+.tasks__list .ico { transition: transform .5s var(--ease), filter .5s var(--ease); }
+.tasks__list { isolation: isolate; }
+@media (hover: hover) and (pointer: fine) and (min-width: 901px) {
+  .tasks__list li:hover { color: #fff; }
+  .tasks__list li:hover::before { opacity: 1; }
+  .tasks__list li:hover::after { transform: scaleX(1); }
+  .tasks__list li:hover .ico { transform: translateY(-4px); filter: drop-shadow(0 0 6px rgba(203, 150, 102, .55)); }
+}
 
 /* ---------- 2. Послуги ---------- */
 /* Фото ≈ 42% ширини картки; його висоту задає текст (зображення абсолютне й не розтягує картку) */
@@ -293,17 +320,18 @@ article.svc:hover { background: var(--card-2); border-color: var(--line-2); }
 .principles { margin-top: var(--strip-pad); padding-top: var(--strip-pad); border-top: 1px solid var(--dark-line); }
 @media (min-width: 901px) {
   .tasks__list--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 40px; }
-  .tasks__list--3 li:nth-child(3n+1) { border-left: 0; padding-left: 0; }
+  .tasks__list--3 li:nth-child(3n+1) { --pl: 0px; background-image: none; }
 }
 
 /* Етапи: нумеровані кола, з'єднані лінією */
-.process { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--gap); text-align: center; }
+/* Колонки рівні й центровані під колами; вузький проміжок — щоб опис уміщався у 2–3 рядки */
+.process { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--gap) clamp(16px, 1.6vw, 24px); text-align: center; }
 .process::before { content: ""; position: absolute; top: 28px; left: 10%; right: 10%; height: 1px; background: var(--line-2); }
-.step { position: relative; padding: 0 8px; }
-.step__num { display: grid; place-items: center; width: 56px; height: 56px; margin: 0 auto 24px; border: 1px solid var(--line-2); border-radius: 50%; background: var(--stone); font: 300 24px/1 var(--serif); color: var(--accent); }
+.step { position: relative; }
+.step__num { display: grid; place-items: center; width: 56px; height: 56px; margin: 0 auto 36px; border: 1px solid var(--line-2); border-radius: 50%; background: var(--stone); font: 300 24px/1 var(--serif); color: var(--accent); }
 .step__num .ico { width: 22px; height: 22px; }
 .step h3 { font-size: 18px; margin-bottom: 10px; }
-.step p { color: var(--muted); font-size: 15px; }
+.step p { color: var(--muted); font-size: 15px; text-wrap: balance; }
 
 /* ---------- 5. Про нас ---------- */
 /* Надзаголовок — над обома колонками; фото займає висоту лівої колонки:
@@ -329,11 +357,16 @@ article.svc:hover { background: var(--card-2); border-color: var(--line-2); }
 .exp__intro { font: 300 clamp(24px, 2.6vw, 36px)/1.3 var(--serif); letter-spacing: -.015em; color: var(--tone); max-width: 860px; margin-bottom: var(--head-gap); }
 .exp__intro strong { font-weight: 400; color: var(--ink); }
 .exp__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line-2); }
-.exp__item { display: flex; gap: 22px; align-items: flex-start; padding: 36px 28px 0; border-left: 1px solid var(--line-2); }
+/* Три рівні колонки на всю ширину; заголовок — один рядок, опис — рівно два (розрив задано <br>) */
+.exp__item { display: flex; gap: 20px; align-items: flex-start; padding: 36px 24px 0; border-left: 1px solid var(--line-2); }
 .exp__item:first-child { border-left: 0; padding-left: 0; }
-.exp__num { font: 300 clamp(80px, 8vw, 120px)/.82 var(--serif); letter-spacing: -.04em; color: var(--accent); }
+.exp__item:last-child { padding-right: 0; }
+.exp__item > div { flex: 1; min-width: 0; }
+.exp__num { font: 300 clamp(72px, 6.6vw, 104px)/.82 var(--serif); letter-spacing: -.04em; color: var(--accent); }
 .exp__unit { font-size: 13px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
-.exp__item h3 { font-size: 19px; margin-bottom: 6px; }
+.exp__item h3 { font-size: 19px; margin-bottom: 8px; }
+/* Вужчі колонки (901–1280): число над текстом, щоб заголовок лишався в один рядок */
+@media (min-width: 901px) and (max-width: 1280px) { .exp__item { flex-direction: column; gap: 24px; } }
 .exp__item p:last-child { color: var(--muted); font-size: 15px; }
 
 /* ---------- Заглушки ---------- */
@@ -541,6 +574,10 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
+  .js .strip .tasks__label, .js .strip .tasks__list li { opacity: 1; transform: none; }
+  .js .strip .tasks__list li { --line-size: 1px 100%; }
+  .js .strip .ico :is(path, rect, circle) { stroke-dasharray: none; }
+  .tasks__list li:hover .ico { transform: none !important; }
   .pill { animation: none; background-size: 100% 1.5px; }
   * { transition-duration: .01ms !important; transition-delay: 0s !important; }
   .btn:hover, .photo-zoom:hover img { transform: none !important; }
@@ -604,7 +641,7 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .hero__gallery { grid-template-columns: repeat(2, 1fr); padding: 0 var(--gutter); }
   .hero__photo:last-child { display: none; }
   .tasks__list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
-  .tasks__list li:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .tasks__list li:nth-child(odd) { --pl: 0px; background-image: none; }
   .section-head { grid-template-columns: minmax(0, 1fr); grid-template-areas: "eyebrow" "title" "side"; }
   .section-head__text, .section-head > .btn { margin-top: var(--text-gap); align-self: start; justify-self: start; }
   .section-head__text { max-width: 560px; }
@@ -664,8 +701,11 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .hero__badge-ico { width: 30px; height: 30px; padding-right: 14px; }
   .hero__badge strong { font-size: 16px; }
   .tasks__list { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
-  .tasks__list li { flex-direction: row; align-items: center; gap: 20px; padding: 20px 0; border-left: 0; border-top: 1px solid var(--dark-line); font-size: 19px; }
-  .tasks__list li:first-child { border-top: 0; }
+  /* Телефон: розділювачі горизонтальні — малюються зліва направо */
+  .tasks__list li, .tasks__list li:nth-child(odd) { --pl: 0px; --line-size: 100% 1px; flex-direction: row; align-items: center; gap: 20px; padding: 20px 0; font-size: 19px; background-image: linear-gradient(var(--dark-line), var(--dark-line)); }
+  .js .strip .tasks__list li { --line-size: 0% 1px; }
+  .js .strip.is-in .tasks__list li { --line-size: 100% 1px; }
+  .tasks__list li:first-child { background-image: none; }
   .steps-list { grid-template-columns: minmax(0, 1fr); }
   .steps-list li:nth-last-child(2) { border-bottom: 0; }
   .svc-grid { grid-template-columns: minmax(0, 1fr); }

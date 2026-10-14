@@ -290,6 +290,34 @@
     requestAnimationFrame(tick);
   };
 
+  // ---------- Темні стрічки «Завдання» / «Принципи» ----------
+  // Іконки з <use> вбудовуються інлайном з pathLength="1", щоб CSS міг «намалювати» кожну лінію за той самий час.
+  // Порядок появи пунктів (--i) і запуск анімації — тут, хореографія — у CSS (.strip). Анімація грає один раз.
+  const strips = document.querySelectorAll('.strip');
+  strips.forEach((strip) => {
+    strip.querySelectorAll('.tasks__list li').forEach((li, i) => li.style.setProperty('--i', i));
+    strip.querySelectorAll('svg.ico').forEach((svg) => {
+      const use = svg.querySelector('use');
+      const symbol = use && document.querySelector(use.getAttribute('href'));
+      if (!symbol) return;
+      svg.setAttribute('viewBox', symbol.getAttribute('viewBox'));
+      svg.replaceChildren(...[...symbol.childNodes].map((n) => n.cloneNode(true)));
+      svg.querySelectorAll('path, rect, circle').forEach((shape) => shape.setAttribute('pathLength', '1'));
+    });
+  });
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    const stripIo = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-in');
+        stripIo.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.15 });
+    strips.forEach((el) => stripIo.observe(el));
+  } else {
+    strips.forEach((el) => el.classList.add('is-in'));
+  }
+
   // ---------- Поява блоків під час прокручування ----------
   // Елементи, що з'являються одночасно, отримують невелику затримку один за одним
   const reveals = document.querySelectorAll('.reveal');
