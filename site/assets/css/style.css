@@ -299,15 +299,15 @@ article.svc:hover { background: var(--card-2); border-color: var(--line-2); }
 .svc--photo { padding: 0; overflow: hidden; border: 0; }
 .svc--photo img { width: 100%; height: 100%; object-fit: cover; }
 
-/* ---------- 3. CTA: фото + темна панель, що на нього заходить ---------- */
-.cta { overflow: hidden; isolation: isolate; color: #fff; padding-bottom: calc(var(--strip-pad) + var(--sheet)); }
+/* ---------- 3. CTA: фото + світла картка, що на нього заходить ----------
+   Картка світла, щоб темні блоки не йшли підряд (далі — темна секція «Чому UGP») */
+.cta { overflow: hidden; isolation: isolate; padding-bottom: calc(var(--strip-pad) + var(--sheet)); }
 .cta__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
 .cta__wrap { display: flex; justify-content: flex-end; padding-top: clamp(140px, 16vw, 240px); }
-.cta__panel { width: min(560px, 100%); background: var(--dark); border-radius: var(--radius); padding: clamp(40px, 4.5vw, 64px) var(--card-pad); text-align: center; box-shadow: 0 24px 60px rgba(var(--shadow), .3); }
+.cta__panel { width: min(560px, 100%); background: var(--white); border-radius: var(--radius); padding: clamp(40px, 4.5vw, 64px) var(--card-pad); text-align: center; box-shadow: 0 24px 60px rgba(var(--shadow), .18); }
 .cta__panel .eyebrow { justify-content: center; }
-.cta h2 { color: #fff; margin-bottom: 16px; }
-.cta .tone { color: rgba(255,255,255,.55); }
-.cta p:not(.eyebrow) { color: rgba(255,255,255,.8); margin: 0 auto 32px; max-width: 420px; }
+.cta h2 { margin-bottom: 16px; }
+.cta p:not(.eyebrow) { color: var(--muted); margin: 0 auto 32px; max-width: 420px; }
 
 /* ---------- 4. Чому UGP ---------- */
 /* Лінія під заголовком темної секції — окремий шар (::after), щоб «малюватися» зліва направо */
@@ -316,7 +316,7 @@ article.svc:hover { background: var(--card-2); border-color: var(--line-2); }
 .why { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 4vw, 56px); }
 .why__media { border-radius: var(--radius); overflow: hidden; min-height: 480px; }
 .why__media img { width: 100%; height: 100%; object-fit: cover; }
-.why__lead { font: 300 clamp(22px, 2vw, 28px)/1.4 var(--serif); color: rgba(255,255,255,.92); margin-bottom: var(--text-gap); }
+.why__body { align-self: center; }
 .why__list li { display: flex; gap: 24px; align-items: flex-start; padding: 26px 0; border-top: 1px solid var(--dark-line); }
 .why__ico { flex: none; display: grid; place-items: center; width: 72px; height: 72px; border-radius: var(--radius); background: var(--card); color: var(--accent); }
 .why__ico .ico { width: 26px; height: 26px; }
@@ -331,6 +331,9 @@ article.svc:hover { background: var(--card-2); border-color: var(--line-2); }
 
 /* Етапи: нумеровані кола, з'єднані лінією */
 /* Колонки рівні й центровані під колами; вузький проміжок — щоб опис уміщався у 2–3 рядки */
+/* Етапи закінчуються короткою приміткою — менший нижній відступ, щоб не було порожньої смуги */
+.process-section { padding-bottom: calc(var(--section-sm) + var(--sheet)); }
+.process-section .fineprint--center { margin-top: var(--text-gap); }
 .process { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--gap) clamp(16px, 1.6vw, 24px); text-align: center; }
 .process::before { content: ""; position: absolute; top: 28px; left: 10%; right: 10%; height: 1px; background: var(--line-2); transform-origin: left; }
 .step { position: relative; }
@@ -447,7 +450,6 @@ article.svc:hover { background: var(--card-2); border-color: var(--line-2); }
 .intl__rows b { color: rgba(255,255,255,.92); }
 
 /* ---------- 8. Команда ---------- */
-#team { padding-bottom: 0; }
 .team { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
 .member { background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
 .member__photo { aspect-ratio: 4 / 4.2; overflow: hidden; }
@@ -457,26 +459,26 @@ article.svc:hover { background: var(--card-2); border-color: var(--line-2); }
 .member__name { font: 300 clamp(22px, 1.9vw, 26px)/1.22 var(--serif); letter-spacing: -.015em; margin-bottom: 12px; }
 .member__text { color: var(--muted); font-size: 15px; }
 
-/* ---------- 9. Нам довіряють (продовжує тло команди) ---------- */
-.trust { background: var(--paper); padding: var(--head-gap) 0 calc(var(--section) + var(--sheet)); }
-.trust__inner { position: relative; display: flex; align-items: center; gap: 40px; padding-top: var(--head-gap); }
-.trust__inner::before { content: ""; position: absolute; top: 0; left: var(--gutter); right: var(--gutter); height: 1px; background: var(--line-2); transform-origin: left; }
-.trust__label { flex: none; font: 300 26px/1.2 var(--serif); letter-spacing: -.01em; padding-right: 40px; border-right: 1px solid var(--line-2); }
+/* ---------- 9. З ким ми працюємо — окрема біла секція ---------- */
+.trust { background: var(--white); padding: var(--section-sm) 0 calc(var(--section-sm) + var(--sheet)); }
+.trust__inner { display: flex; flex-direction: column; align-items: stretch; gap: var(--head-gap); }
+.trust__label { font-size: var(--fs-h2); line-height: 1.15; }
 .trust__logos { flex: 1; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--gap); }
 .trust__logos .ph-logo { width: 100%; }
-.trust__label { max-width: 220px; }
 .trust__logos--who { gap: 0; }
-.who { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 6px 16px; border-left: 1px solid var(--line-2); }
-.who__ico { width: 32px; height: 32px; color: var(--accent); transition: transform .4s var(--ease); }
+.who { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; padding: 4px 24px 8px; border-left: 1px solid var(--line-2); }
+.who__ico { width: 48px; height: 48px; color: var(--accent); transition: transform .4s var(--ease); }
 .who:first-child { border-left: 0; padding-left: 0; }
 .who:hover .who__ico { transform: translateY(-3px); }
-.who span { font-size: 14.5px; font-weight: 500; line-height: 1.3; color: var(--ink); }
+.who span { font: 300 21px/1.25 var(--serif); letter-spacing: -.01em; color: var(--ink); }
 
 /* ---------- 10. Відгуки ---------- */
-/* Відгук: велике фото + цитата в дві колонки */
-.reviews__inner { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(40px, 6vw, 96px); align-items: stretch; }
-.reviews__body { display: flex; flex-direction: column; justify-content: center; padding: 8px 0; }
-.reviews__media { position: relative; border-radius: var(--radius); overflow: hidden; min-height: 440px; margin: 0; touch-action: pan-y; }
+/* Відгук: одна картка на всю ширину контенту — фото й текст приблизно навпіл */
+.reviews__inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: stretch; }
+/* Картка займає ширину контенту (як інші блоки): поле всередині — --inset, фото до краю картки */
+.reviews__inner { background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); padding: var(--inset); width: calc(100% - var(--gutter) * 2); max-width: var(--wrap); }
+.reviews__body { display: flex; flex-direction: column; justify-content: center; padding: clamp(32px, 4.5vw, 72px); }
+.reviews__media { position: relative; border-radius: calc(var(--radius) - 2px); overflow: hidden; min-height: 560px; margin: 0; touch-action: pan-y; }
 .reviews__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; opacity: 0; transition: opacity .6s var(--ease), transform .8s var(--ease); }
 .reviews__media img.is-active { opacity: 1; }
 /* Слайди лежать в одній клітинці сітки: висота блоку = найдовший відгук, тож сторінка не «стрибає».
@@ -485,7 +487,7 @@ article.svc:hover { background: var(--card-2); border-color: var(--line-2); }
 .reviews__figure { grid-area: 1 / 1; margin: 0; opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity .3s var(--ease), transform .3s var(--ease), visibility 0s .3s; }
 .reviews__figure.is-active { opacity: 1; visibility: visible; transform: none; transition: opacity .45s var(--ease) .15s, transform .45s var(--ease) .15s, visibility 0s; }
 /* Керування: бронзові кола-стрілки, лічильник «01 / 04» і тонка лінія позиції */
-.reviews__nav { display: flex; align-items: center; gap: 12px; margin-top: var(--text-gap); max-width: 640px; }
+.reviews__nav { display: flex; align-items: center; gap: 12px; margin-top: var(--text-gap); }
 .reviews__nav[hidden] { display: none; }
 .reviews__arrow { flex: none; display: grid; place-items: center; width: 52px; height: 52px; padding: 0; border: 1px solid var(--accent); border-radius: 50%; background: transparent; color: var(--accent); cursor: pointer; transition: background .3s var(--ease), color .3s var(--ease), transform .3s var(--ease); }
 .reviews__arrow .ico { width: 20px; height: 20px; }
@@ -497,8 +499,8 @@ article.svc:hover { background: var(--card-2); border-color: var(--line-2); }
 .reviews__progress i { position: absolute; inset: 0; background: var(--accent); transform-origin: left; transform: scaleX(var(--p, .25)); transition: transform .6s var(--ease); }
 .reviews__mark { width: 44px; height: 44px; color: var(--accent); margin-bottom: var(--label-gap); }
 .reviews__quote { margin: 0; }
-.reviews__quote p { font: 300 clamp(22px, 2.1vw, 30px)/1.4 var(--serif); letter-spacing: -.012em; max-width: 640px; }
-.reviews__author { display: flex; flex-direction: column; gap: 2px; margin-top: var(--text-gap); padding-top: 24px; border-top: 1px solid var(--line-2); max-width: 640px; }
+.reviews__quote p { font: 300 clamp(22px, 2.1vw, 30px)/1.4 var(--serif); letter-spacing: -.012em; }
+.reviews__author { display: flex; flex-direction: column; gap: 2px; margin-top: var(--text-gap); padding-top: 24px; border-top: 1px solid var(--line-2); }
 .reviews__name { font-weight: 500; font-size: 17px; }
 .reviews__pos { font-size: 14px; color: var(--muted); }
 .photo-grade { filter: sepia(.14) saturate(.78) contrast(1.03); }
@@ -685,10 +687,10 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
 .js .rules > li::before, .js .rules > li:last-child::after { transform: scaleX(0); transition: transform .9s var(--ease) calc(var(--i, 0) * 80ms); }
 .js .rules > li:last-child::after { transition-delay: calc((var(--i, 0) + 1) * 80ms); }
 .js .rules.is-in > li::before, .js .rules.is-in > li:last-child::after { transform: none; }
-.js .section--dark .section-head::after, .js .process::before, .js .exp__grid::before, .js .trust__inner::before, .js .footer__bottom::before {
+.js .section--dark .section-head::after, .js .process::before, .js .exp__grid::before, .js .footer__bottom::before {
   transform: scaleX(0); transition: transform .9s var(--ease) .25s;
 }
-.js .section--dark .section-head.is-in::after, .js .process.is-in::before, .js .exp__grid.is-in::before, .js .trust__inner.is-in::before, .js .footer.is-in .footer__bottom::before { transform: none; }
+.js .section--dark .section-head.is-in::after, .js .process.is-in::before, .js .exp__grid.is-in::before, .js .footer.is-in .footer__bottom::before { transform: none; }
 .js .process > .step::after { transform-origin: top; transform: scaleY(0); transition: transform .9s var(--ease) .3s; }
 .js .process.is-in > .step::after { transform: none; }
 
@@ -792,7 +794,7 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .js .reveal, .js .hi, .js .hero__title { opacity: 1; transform: none; transition: none; }
   .js .split .wi, .js .reveal .photo-zoom img, .js .photo-zoom.reveal img, .js .hero__photo.hi img, .js .cta__bg, .js .intl__bg { transform: none; }
   .js .rules > li::before, .js .rules > li:last-child::after, .js .section--dark .section-head::after, .js .process::before,
-  .js .exp__grid::before, .js .trust__inner::before, .js .footer__bottom::before, .js .process > .step::after { transform: none; }
+  .js .exp__grid::before, .js .footer__bottom::before, .js .process > .step::after { transform: none; }
   .js .footer::before, .js .footer::after, .js .footer__wordmark { opacity: 1; transform: none; }
   .reviews__figure { transform: none; }
   .js .strip .tasks__label, .js .strip .tasks__list li { opacity: 1; transform: none; }
@@ -833,7 +835,7 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .process::before { display: none; }
 
   .trust__logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .trust__logos--who { row-gap: 28px; }
+  .trust__logos--who { row-gap: 40px; }
   .who:nth-child(3n+1) { border-left: 0; padding-left: 0; }
   .footer__top { grid-template-columns: repeat(3, 1fr); row-gap: 40px; }
   .footer__brand { grid-column: 1 / -1; }
@@ -892,11 +894,10 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .member { display: grid; grid-template-columns: minmax(200px, 38%) minmax(0, 1fr); }
   .member__photo { aspect-ratio: auto; min-height: 260px; }
   .member__body { align-self: center; }
-  .reviews__inner { grid-template-columns: minmax(0, 1fr); gap: var(--head-gap); }
+  .reviews__inner { grid-template-columns: minmax(0, 1fr); }
   .reviews__media { aspect-ratio: 4 / 3.6; min-height: 0; }
+  .reviews__body { padding: 32px calc(var(--card-pad) - var(--inset)) calc(var(--card-pad) - var(--inset)); }
   .intl__rows li { grid-template-columns: 56px minmax(0, 1fr); gap: 16px; }
-  .trust__inner { flex-direction: column; align-items: flex-start; gap: var(--text-gap); }
-  .trust__label { border: 0; padding: 0; }
   .footer { --f-light: .75; }
   .trust__logos { width: 100%; }
 }
@@ -946,7 +947,7 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .svc { min-height: 0; }
   .feature__body { padding: 32px calc(var(--card-pad) - var(--inset)) calc(var(--card-pad) - var(--inset)); }
   .feature .btn, .cta .btn, .intl .btn { width: 100%; }
-  .cta { background: var(--white); }
+  .cta { background: var(--stone); }
   .cta__bg { height: 300px; bottom: auto; object-position: 45% 60%; }
   .cta__wrap { padding-top: 220px; }
   .cta__panel { padding-left: var(--card-pad); padding-right: var(--card-pad); }
@@ -960,12 +961,12 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .member { grid-template-columns: minmax(0, 1fr); }
   .member__photo { aspect-ratio: 4 / 4.2; min-height: 0; }
   .trust__logos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .trust__logos--who { row-gap: 24px; }
-  .who { flex-direction: row; align-items: center; gap: 12px; padding: 4px 10px; }
+  .trust__logos--who { row-gap: 32px; }
+  .who { gap: 14px; padding: 4px 16px; }
   .who:nth-child(odd) { border-left: 0; padding-left: 0; }
-  .who:nth-child(even) { border-left: 1px solid var(--line-2); padding-left: 10px; }
-  .who__ico { width: 26px; height: 26px; flex: none; }
-  .who span { font-size: 15px; }
+  .who:nth-child(even) { border-left: 1px solid var(--line-2); padding-left: 16px; }
+  .who__ico { width: 40px; height: 40px; }
+  .who span { font-size: 19px; }
   .contacts { grid-template-columns: minmax(0, 1fr); }
   .contact-card { min-height: 0; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 16px; }
   .contact-card > .ico { margin: 0; }
@@ -1000,3 +1001,13 @@ html.lang-anim body, html.lang-in body { overflow-anchor: none; }
   @media (min-width: 901px) { .section-head__text { margin-top: -.42em; margin-bottom: -.475em; } } /* Onest, line-height 1.6 */
   .exp__num { margin-top: -.08em; }              /* Literata, line-height .82, з поправкою на висоту цифр */
 }
+/* ---------- Спрощений hero (лише hero-preview.html — варіант для порівняння) ----------
+   Заголовок, короткий текст і одна кнопка (низ — на рівні останнього рядка заголовка) + одне широке фото */
+.hero--simple .hero__aside { justify-content: flex-end; gap: 32px; }
+.hero--simple .hero__gallery { grid-template-columns: minmax(0, 1fr); }
+.hero--simple .hero__photo { display: block; aspect-ratio: 21 / 9; }
+.hero--simple .hero__photo img { object-position: 50% 40%; }
+@media (max-width: 900px) { .hero--simple .hero__photo { aspect-ratio: 16 / 9; } }
+@media (max-width: 600px) { .hero--simple .hero__photo { aspect-ratio: 4 / 3; } }
+.preview-bar { margin: 0; padding: 10px var(--gutter); background: var(--pill); color: var(--ink); font-size: 14px; text-align: center; }
+.preview-bar a { color: var(--accent); font-weight: 500; }

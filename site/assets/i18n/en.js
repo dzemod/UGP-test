@@ -97,11 +97,10 @@ window.UGP_I18N.en = {
   /* ---------- 4. Why UGP & process ---------- */
   "why.eyebrow": "Why UGP",
   "why.title": "We organize, manage and control project delivery",
-  "why.lead": "We assess whether delivery is feasible. Any obstacles identified are discussed before the main investments are made and major works begin.",
   "why.i1Title": "Success fee — payment for results",
   "why.i1Text": "Criteria and terms are set out in the contract.",
   "why.i2Title": "Control at every stage",
-  "why.i2Text": "We assign responsibilities, deadlines and checkpoints. Each next stage starts only after the previous one has been verified.",
+  "why.i2Text": "Each next stage starts only after the previous one has been verified.",
   "why.i3Title": "Everyone is accountable for their area",
   "why.i3Text": "We organize and control the work of designers, developers and contractors to achieve the agreed result.",
   "why.principles": "Principles",
