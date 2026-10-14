@@ -83,6 +83,8 @@
     if (el.querySelector('p, li, div, dd')) return;
     const full = el.textContent.replace(/\s+$/, '');
     if (full.split(/[\s ]+/).length < 3) return;
+    // Довгі закінчення («stakeholder engagement») не склеюємо — інакше рядок вилазить за межі вузької картки
+    if (full.split(/\s+/).slice(-2).join(' ').length > 18) return;
     // Уже зʼєднано (останній пробіл — нерозривний)? Тоді нічого не робимо — функція ідемпотентна.
     const lastGap = full.search(/[\s ](?=[^\s ]*$)/);
     if (lastGap > -1 && full[lastGap] === NBSP) return;
