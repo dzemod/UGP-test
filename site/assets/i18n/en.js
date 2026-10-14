@@ -6,7 +6,7 @@
  *  - Змінюйте лише текст у лапках праворуч. Ключі ліворуч (наприклад "hero.lead") не чіпайте.
  *    Edit only the text in quotes on the right. Do not change the keys on the left.
  *  - Зберігайте HTML-теги всередині тексту: <span class="tone">…</span> (сірі слова в заголовку),
- *    <span class="pill">…</span> (виділене слово), <strong>, <a>, а також &nbsp; (нерозривний пробіл).
+ *    <span class="pill">…</span> (виділене слово), <strong>, <a>, <br> (перенос рядка), а також &nbsp; (нерозривний пробіл).
  *    Keep the HTML tags inside the text as they are.
  *  - Якщо ключ видалити, на сайті покажеться український текст.
  *    If a key is missing, the Ukrainian text is shown instead.
@@ -40,20 +40,19 @@ window.UGP_I18N.en = {
   "cta.request": "Send a request",
 
   /* ---------- 1. Hero ---------- */
-  "hero.title": "Delivering <span class=\"pill\">investment<i class=\"pill__dot\" aria-hidden=\"true\"></i></span> projects in&nbsp;Ukraine",
+  "hero.title": "Delivering <span class=\"pill\">investment</span> projects in&nbsp;Ukraine",
   "hero.aud1": "Investors",
   "hero.aud2": "Owners",
   "hero.aud3": "Developers",
   "hero.lead": "From analysis to an operating asset. We organize, control and take responsibility for the agreed&nbsp;result.",
-  "hero.assure": "No-obligation initial consultation · NDA · Ukrainian / English",
   "hero.badgeKicker": "First step",
   "hero.badgeTitle": "No-obligation consultation",
   "hero.badgeSub": "We start with your objective",
   "tasks.label": "What clients come to UGP&nbsp;for",
-  "tasks.t1": "Restart a stalled project",
-  "tasks.t2": "Organize delivery",
-  "tasks.t3": "Assess a project before investing",
-  "tasks.t4": "Prepare for launch",
+  "tasks.t1": "Restart a<br>stalled project",
+  "tasks.t2": "Organize<br>delivery",
+  "tasks.t3": "Assess a project<br>before investing",
+  "tasks.t4": "Prepare<br>for launch",
 
   /* ---------- 2. Services ---------- */
   "services.eyebrow": "Areas of work",
@@ -89,7 +88,6 @@ window.UGP_I18N.en = {
   "svc6.title": "Development project organization",
   "svc6.text": "Project model, participant structure, coordination of design and permitting tasks.",
   "svc6.result": "An agreed plan and a managed process of creating the asset.",
-  "services.fine": "Legal practice areas support the delivery of the investment project. Risk assessment is part of due diligence and project work.",
 
   /* ---------- 3. Call to action ---------- */
   "cta1.eyebrow": "First step",
@@ -108,11 +106,11 @@ window.UGP_I18N.en = {
   "why.i3Text": "We organize and control the work of designers, developers and contractors to achieve the agreed result.",
   "why.principles": "Principles",
   "why.p1": "Competence",
-  "why.p2": "Results over process",
-  "why.p3": "System and control",
-  "why.p4": "Reliability and predictability",
-  "why.p5": "Unconventional thinking",
-  "why.p6": "Collaboration and communication",
+  "why.p2": "Results<br>over process",
+  "why.p3": "System<br>and control",
+  "why.p4": "Reliability<br>and predictability",
+  "why.p5": "Unconventional<br>thinking",
+  "why.p6": "Collaboration<br>and communication",
   "process.eyebrow": "How we work",
   "process.title": "From initial assessment <span class=\"tone\">to asset handover</span>",
   "process.s1Title": "Initial assessment",
@@ -144,7 +142,6 @@ window.UGP_I18N.en = {
   "exp.t2Text": "Development, investment, management. MBA kmbs.",
   "exp.t3Title": "GR, communities, reputation",
   "exp.t3Text": "Work with authorities, communities and local self-government.",
-  "exp.fine": "These figures reflect the partners’ experience in the respective areas. They do not indicate the company’s age and are not cumulative.",
 
   /* ---------- 6. Cases: typical scenarios based on the brief ---------- */
   "cases.eyebrow": "Cases",

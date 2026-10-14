@@ -34,6 +34,7 @@
   --gap: 16px;
   --section: clamp(80px, 8.5vw, 120px);
   --head-gap: clamp(40px, 4.5vw, 56px);
+  --strip-pad: clamp(56px, 6vw, 88px); /* відступи стрічок «Завдання» і «Принципи» */
   --radius: 8px;
   --sheet: 28px;             /* заокруглення верхніх кутів секцій-«аркушів» */
   --edge: max(var(--gutter), calc((100vw - var(--wrap)) / 2));
@@ -74,7 +75,7 @@ h2 { font-size: var(--fs-h2); line-height: 1.12; }
 h3, h4 { font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
 /* Без «вдів»: останній рядок абзацу не лишається з одного слова */
 p, li, dd, dt, blockquote, figcaption { text-wrap: pretty; }
-.tasks__list li, .principles b, .who span, .steps-list b, .btn { text-wrap: balance; }
+.tasks__list li, .who span, .steps-list b, .btn { text-wrap: balance; }
 
 /* Акцентні слова в заголовках: курсив + приглушений тон */
 .tone { font-style: italic; color: var(--tone); }
@@ -121,10 +122,9 @@ p, li, dd, dt, blockquote, figcaption { text-wrap: pretty; }
 
 /* ---------- Заголовки секцій ---------- */
 .eyebrow {
-  display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+  display: flex; align-items: center; margin-bottom: 20px;
   font: 500 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--accent);
 }
-.eyebrow::before { content: ""; width: 24px; height: 1.5px; background: currentColor; }
 .eyebrow--light { color: var(--accent-dark); }
 .eyebrow--center { justify-content: center; }
 
@@ -141,12 +141,16 @@ p, li, dd, dt, blockquote, figcaption { text-wrap: pretty; }
 
 /* Заголовок секції: надзаголовок над рядком «заголовок ↔ текст праворуч».
    Верх заголовка і тексту праворуч вирівняно по верху великих літер (див. «Вирівнювання по висоті літер» нижче). */
-.section-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "eyebrow ." "title side"; column-gap: 40px; align-items: start; margin-bottom: var(--head-gap); }
+/* Заголовок обрізано до базової лінії (див. нижче) — додаємо висоту виносних елементів, щоб відступ під ним не змінився */
+.section-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "eyebrow ." "title side"; column-gap: 40px; align-items: start; margin-bottom: calc(var(--head-gap) + var(--fs-h2) * .131); }
 .section-head > div { display: contents; }
 .section-head .eyebrow { grid-area: eyebrow; margin-bottom: calc(20px + var(--fs-h2) * .265); }
 .section-head h2 { grid-area: title; max-width: 720px; }
-.section-head__text { grid-area: side; max-width: 340px; color: var(--muted); font-size: 15px; }
-.section-head > .btn { grid-area: side; align-self: end; } /* кнопка — внизу заголовка, як у референсі */
+/* Заголовок з текстом праворуч: сіра частина завжди з нового рядка (як в UA), щоб заголовок не був нижчим за текст */
+.section-head:has(.section-head__text) h2 .tone { display: block; }
+/* Текст праворуч вирівняно по верху: верх великих літер першого рядка = верх великих літер заголовка */
+.section-head__text { grid-area: side; align-self: start; max-width: 440px; color: var(--muted); font-size: 16px; text-wrap: balance; }
+.section-head > .btn { grid-area: side; align-self: end; } /* низ кнопки = базова лінія заголовка */
 .section-head--center { grid-template-columns: minmax(0, 1fr); grid-template-areas: "eyebrow" "title"; justify-items: center; text-align: center; }
 .section-head--center .eyebrow { justify-content: center; }
 .subhead { font: 500 22px/1.3 var(--sans); margin: calc(var(--head-gap) * 1.5) 0 28px; }
@@ -193,23 +197,25 @@ html.lang-out [data-i18n] { opacity: 0 !important; }
 .burger { display: none; }
 
 /* ---------- 1. Hero ---------- */
-.hero { padding-top: clamp(56px, 7vw, 96px); }
-.hero__head { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 48px; align-items: start; }
-.hero__title { font-size: clamp(42px, 5vw, 72px); line-height: 1.06; }
+.hero { padding-top: clamp(80px, 9.5vw, 136px); }
+.hero__head { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 72px; align-items: start; }
+.hero__title { font-size: clamp(42px, 5vw, 72px); line-height: 1.17; }
+/* Виділене слово: тонка бронзова лінія під літерами, «малюється» при завантаженні */
 .pill {
-  display: inline-flex; align-items: center; gap: .16em;
-  padding: .02em .14em .06em .3em; margin: 0 .04em;
-  background: var(--pill); border-radius: 999px; color: var(--dark); line-height: 1.02;
+  background: linear-gradient(var(--accent), var(--accent)) no-repeat 0 calc(100% - .11em) / 0 1.5px;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  animation: pill-draw 1.2s var(--ease) .7s forwards;
 }
-.pill__dot { display: inline-block; width: .48em; height: .48em; flex: none; margin-top: .08em; border-radius: 50%; border: .06em solid #fff; background: rgba(255,255,255,.4); }
-.hero__aside { max-width: 400px; justify-self: end; }
-.hero__audience { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+@keyframes pill-draw { to { background-size: 100% 1.5px; } }
+/* Права колонка на всю висоту заголовка: верх тегів = верх першого рядка, низ кнопки = базова лінія останнього */
+.hero__aside { max-width: 400px; justify-self: end; align-self: stretch; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 14px; }
+/* EN-заголовок коротший: на десктопі — теж три рядки, щоб права колонка вміщалася між лініями */
+@media (min-width: 901px) { html[lang="en"] .hero__title { max-width: 9em; } }
+.hero__audience { display: flex; flex-wrap: wrap; gap: 8px; }
 .hero__audience span { font-size: 13px; font-weight: 500; padding: 6px 13px; border: 1px solid var(--line-2); border-radius: 999px; background: var(--white); }
-.hero__lead { color: var(--muted); font-size: 17px; margin-bottom: 28px; }
-.hero__assure { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13.5px; color: var(--muted); }
-.hero__assure .ico { width: 16px; height: 16px; color: var(--accent); }
+.hero__lead { color: var(--muted); font-size: 17px; }
 
-.hero__gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); max-width: calc(var(--wrap) + var(--gutter) * 2); margin: clamp(48px, 5.5vw, 80px) auto 0; padding: 0 var(--gutter); }
+.hero__gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); max-width: calc(var(--wrap) + var(--gutter) * 2); margin: clamp(64px, 7.5vw, 112px) auto 0; padding: 0 var(--gutter); }
 .hero__photo { position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 6 / 5; background: var(--card); }
 .hero__photo img { width: 100%; height: 100%; object-fit: cover; }
 .hero__badge { position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; align-items: center; gap: 20px; background: #fff; border-radius: var(--radius); padding: 20px 22px; box-shadow: 0 12px 32px rgba(var(--shadow), .12); }
@@ -219,26 +225,30 @@ html.lang-out [data-i18n] { opacity: 0 !important; }
 .hero__badge-sub { font-size: 13px; color: var(--muted); }
 
 /* Смуга завдань: темна стрічка з 4 рівними колонками та вертикальними розділювачами */
-.tasks { background: var(--dark); color: #fff; margin-top: clamp(48px, 5vw, 72px); padding: 36px 0 calc(40px + var(--sheet)); }
-.tasks__label { font-size: 13px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 8px; }
+.tasks { background: var(--dark); color: #fff; margin-top: clamp(48px, 5vw, 72px); padding: var(--strip-pad) 0 calc(var(--strip-pad) + var(--sheet)); }
+/* Підпис стрічки — як інші підписи секцій, трохи більший: контраст #cb9666 на #1e2023 ≈ 6.3:1 */
+.tasks__label { font-size: 14px; line-height: 1.5; letter-spacing: .14em; margin-bottom: clamp(28px, 3vw, 40px); }
 .tasks__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.tasks__list li { display: flex; flex-direction: column; gap: 18px; padding: 24px 24px 8px; border-left: 1px solid var(--dark-line); font: 300 21px/1.3 var(--serif); }
+/* Кожен пункт — рівно два рядки: розрив задано <br>, усередині рядка перенос заборонено */
+.tasks__list li { display: flex; flex-direction: column; gap: 28px; padding: 24px 28px 8px; white-space: nowrap; hyphens: manual; overflow-wrap: normal; word-break: normal; border-left: 1px solid var(--dark-line); font: 300 21px/1.3 var(--serif); }
 .tasks__list li:first-child { border-left: 0; padding-left: 0; }
 .tasks__list .ico { width: 24px; height: 24px; color: var(--accent-dark); }
 
 /* ---------- 2. Послуги ---------- */
-.feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: var(--gap); background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); padding: var(--gap); }
-.feature__media { border-radius: calc(var(--radius) - 2px); overflow: hidden; min-height: 460px; }
-.feature__media img { width: 100%; height: 100%; object-fit: cover; }
-.feature__body { padding: clamp(20px, 3vw, 40px); display: flex; flex-direction: column; align-items: flex-start; }
+/* Фото ≈ 42% ширини картки; його висоту задає текст (зображення абсолютне й не розтягує картку) */
+.feature { display: grid; grid-template-columns: minmax(0, .72fr) minmax(0, 1fr); gap: var(--gap); background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); padding: var(--gap); }
+.feature__media { position: relative; border-radius: calc(var(--radius) - 2px); overflow: hidden; }
+.feature__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.feature__body { padding: clamp(36px, 4.4vw, 64px); display: flex; flex-direction: column; align-items: flex-start; }
 .feature__kicker { font-size: 13px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
-.feature__title { font: 300 clamp(30px, 3vw, 42px)/1.15 var(--serif); letter-spacing: -.02em; margin: 14px 0 12px; }
-.feature__text { color: var(--muted); font-size: 17px; margin-bottom: 28px; max-width: 480px; }
-.steps-list { width: 100%; display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; margin-bottom: 24px; }
-.steps-list li { display: flex; gap: 14px; align-items: baseline; padding: 15px 0; border-top: 1px solid var(--line-2); font-weight: 500; line-height: 1.35; }
+.feature__title { font: 300 clamp(34px, 3.4vw, 50px)/1.12 var(--serif); letter-spacing: -.02em; margin: 18px 0 20px; }
+.feature__text { color: var(--muted); font-size: 18px; line-height: 1.6; margin-bottom: 40px; max-width: 520px; }
+.steps-list { width: 100%; display: grid; grid-template-columns: 1fr 1fr; column-gap: 40px; margin-bottom: 32px; }
+.steps-list li { display: flex; gap: 16px; align-items: baseline; padding: 20px 0; border-top: 1px solid var(--line-2); font-size: 17px; font-weight: 500; line-height: 1.4; }
 .steps-list li:nth-last-child(-n+2) { border-bottom: 1px solid var(--line-2); }
-.steps-list span { font-size: 12px; color: var(--accent); font-variant-numeric: tabular-nums; }
-.feature__note { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+.steps-list span { flex: none; min-width: 1.6em; font-size: 14px; font-weight: 500; color: var(--accent); font-variant-numeric: tabular-nums; }
+.feature__note { font-size: 15px; color: var(--muted); margin-bottom: 40px; }
+@media (min-width: 901px) and (max-width: 1180px) { .steps-list { grid-template-columns: minmax(0, 1fr); } .steps-list li:nth-last-child(2) { border-bottom: 0; } }
 
 .svc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
 .svc { display: flex; flex-direction: column; min-height: 320px; background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); padding: 28px; transition: background .4s var(--ease), border-color .4s var(--ease); }
@@ -273,13 +283,12 @@ article.svc:hover { background: var(--card-2); border-color: var(--line-2); }
 .why__ico .ico { width: 26px; height: 26px; }
 .why__list h3 { font-size: 18px; margin-bottom: 6px; }
 .why__list p { color: rgba(255,255,255,.68); font-size: 15px; }
-.principles { margin-top: var(--head-gap); padding-top: var(--head-gap); border-top: 1px solid var(--dark-line); }
-.principles__label { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 28px; }
-.principles ul { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); }
-.principles li { display: flex; flex-direction: column; gap: 14px; padding: 4px 18px; border-left: 1px solid var(--dark-line); min-width: 0; }
-.principles li:first-child { border-left: 0; padding-left: 0; }
-.principles span { font-size: 13px; color: rgba(255,255,255,.5); font-variant-numeric: tabular-nums; }
-.principles b { font: 300 clamp(17px, 1.35vw, 20px)/1.3 var(--serif); overflow-wrap: anywhere; }
+/* «Принципи» — та сама стрічка, що й «Завдання» (класи tasks__label / tasks__list); 6 пунктів — сітка 3 × 2 */
+.principles { margin-top: var(--strip-pad); padding-top: var(--strip-pad); border-top: 1px solid var(--dark-line); }
+@media (min-width: 901px) {
+  .tasks__list--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 40px; }
+  .tasks__list--3 li:nth-child(3n+1) { border-left: 0; padding-left: 0; }
+}
 
 /* Етапи: нумеровані кола, з'єднані лінією */
 .process { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--gap); text-align: center; }
@@ -291,25 +300,30 @@ article.svc:hover { background: var(--card-2); border-color: var(--line-2); }
 .step p { color: var(--muted); font-size: 15px; }
 
 /* ---------- 5. Про нас ---------- */
-.about { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(40px, 6vw, 96px); align-items: center; }
+/* Надзаголовок — над обома колонками; фото займає висоту лівої колонки:
+   верх = верх великих літер заголовка, низ = низ посилання «Познайомитися з партнерами» */
+.about { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "eyebrow ." "body media"; column-gap: clamp(40px, 6vw, 96px); }
+.about > .eyebrow { grid-area: eyebrow; margin-bottom: calc(20px + var(--fs-h2) * .265); }
+.about__body { grid-area: body; }
+.about__body .dot-link { display: flex; width: fit-content; } /* блочне посилання: низ колонки = низ посилання, без зайвого рядка */
 .about h2 { margin-bottom: 24px; }
 .about__text { color: var(--muted); font-size: 17px; margin-bottom: 32px; max-width: 520px; }
-.about__points { max-width: 480px; margin-bottom: 28px; }
-.about__points li { display: flex; gap: 18px; padding: 24px; border-radius: var(--radius); }
-.about__points li:first-child { background: var(--card); box-shadow: inset 0 0 0 1px var(--card-line); }
-.about__points .ico { width: 24px; height: 24px; color: var(--ink); margin-top: 2px; }
+/* Обидва пункти однакові: без карток, розділені тонкими лініями */
+.about__points { max-width: 520px; margin-bottom: 32px; }
+.about__points li { display: flex; gap: 18px; padding: 24px 0; border-top: 1px solid var(--line-2); }
+.about__points li:last-child { border-bottom: 1px solid var(--line-2); }
+.about__points .ico { flex: none; width: 24px; height: 24px; color: var(--ink); margin-top: 2px; }
 .about__points h3 { font-size: 19px; margin-bottom: 6px; }
 .about__points p { color: var(--muted); font-size: 15px; }
-.about__body .dot-link { margin-left: 24px; }
-.about__media { border-radius: var(--radius); overflow: hidden; aspect-ratio: 1 / 1; }
-.about__media img { width: 100%; height: 100%; object-fit: cover; }
+.about__media { grid-area: media; position: relative; border-radius: var(--radius); overflow: hidden; }
+.about__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
 /* Досвід партнерів: великі тонкі цифри з підписом поруч */
 .exp { margin-top: var(--section); }
 .exp__intro { font: 300 clamp(24px, 2.6vw, 36px)/1.3 var(--serif); letter-spacing: -.015em; color: var(--tone); max-width: 860px; margin-bottom: var(--head-gap); }
 .exp__intro strong { font-weight: 400; color: var(--ink); }
 .exp__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line-2); }
-.exp__item { display: flex; gap: 22px; align-items: flex-start; padding: 36px 28px 8px; border-left: 1px solid var(--line-2); }
+.exp__item { display: flex; gap: 22px; align-items: flex-start; padding: 36px 28px 0; border-left: 1px solid var(--line-2); }
 .exp__item:first-child { border-left: 0; padding-left: 0; }
 .exp__num { font: 300 clamp(80px, 8vw, 120px)/.82 var(--serif); letter-spacing: -.04em; color: var(--accent); }
 .exp__unit { font-size: 13px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
@@ -323,22 +337,46 @@ article.svc:hover { background: var(--card-2); border-color: var(--line-2); }
 
 /* ---------- 6. Кейси ---------- */
 .cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
-.case { display: grid; grid-template-rows: subgrid; grid-row: span 4; row-gap: 0; background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); padding: var(--gap); }
-.case__body { display: contents; }
-.case__body > * { margin-left: 12px; margin-right: 12px; }
+/* Спільні рядки (subgrid) для всіх карток: фото · тег · заголовок · ситуація · що робимо · результат —
+   кожен рядок починається на одному рівні в усіх трьох картках, панелі результату — внизу й однакової висоти */
+.case { display: grid; grid-template-rows: subgrid; grid-row: span 6; row-gap: 0; background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); padding: var(--gap); }
+.case__body, .case__steps { display: contents; }
+.case__body > *, .case__steps > div { margin-left: 12px; margin-right: 12px; }
 .case__body > .case__tag { margin-top: 22px; }
-.case__body > .case__steps { margin: 0 12px 12px; align-self: start; }
 .case__media { border-radius: calc(var(--radius) - 2px); overflow: hidden; aspect-ratio: 16 / 11; }
 .case__media img { width: 100%; height: 100%; object-fit: cover; }
 .case__tag { display: flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
 .case__tag span { font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 500; }
 .case__tag span::after { content: ""; display: inline-block; width: 16px; height: 1px; margin-left: 10px; vertical-align: middle; background: var(--line-2); }
 .case__title { font: 300 clamp(22px, 1.9vw, 26px)/1.22 var(--serif); letter-spacing: -.015em; margin-bottom: 18px; text-wrap: balance; }
-.case__steps { margin: 0; }
-.case__steps div { display: grid; grid-template-columns: 92px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--card-line); }
+.case__steps > div { display: grid; grid-template-columns: 92px 1fr; align-content: start; gap: 12px; padding: 10px 0; border-top: 1px solid var(--card-line); }
 .case__steps dt { font-size: 11.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
 .case__steps dd { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
-.case__steps div:last-child dd { font-weight: 500; color: var(--ink); }
+/* Результат — ключовий підсумок кейсу: світла бронзова панель із тонкою бронзовою лінією ліворуч */
+.case__steps > .case__result {
+  grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 10px; margin-bottom: 12px; padding: 18px 20px 20px;
+  border-top: 0; border-radius: calc(var(--radius) - 2px);
+  background: rgba(203, 150, 102, .13); box-shadow: inset 2px 0 0 var(--accent);
+}
+.case__result dt { display: flex; align-items: center; gap: 8px; padding-top: 0; color: var(--accent); }
+.case__result dt::before { content: ""; flex: none; width: 14px; height: 14px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12.5 9 17 20 6' fill='none' stroke='%2387562a' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat; }
+.case__result dd { font: 400 18px/1.4 var(--serif); letter-spacing: -.01em; color: var(--dark); text-wrap: pretty; }
+/* Три вузькі колонки (901–1180px): підпис над текстом, трохи менші заголовок і результат */
+@media (min-width: 901px) and (max-width: 1180px) {
+  .case__body > *, .case__steps > div { margin-left: 6px; margin-right: 6px; }
+  .case__steps > div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .case__steps > .case__result { padding: 16px; }
+  .case__title { font-size: 20px; }
+  .case__result dd { font-size: 17px; }
+}
+@media (min-width: 901px) and (max-width: 1000px) {
+  .case { padding: 12px; }
+  .case__steps > .case__result { margin-left: 0; margin-right: 0; padding: 14px 12px 14px 14px; }
+  .case__result dd { font-size: 16px; }
+}
+@media (min-width: 901px) and (max-width: 940px) {
+  .case__result dd { font-size: 15px; }
+}
 
 /* ---------- 7. Міжнародний напрям ---------- */
 .intl { overflow: hidden; isolation: isolate; color: #fff; padding: var(--section) 0 calc(var(--section) + var(--sheet)); }
@@ -493,6 +531,7 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
+  .pill { animation: none; background-size: 100% 1.5px; }
   * { transition-duration: .01ms !important; transition-delay: 0s !important; }
   .btn:hover, .photo-zoom:hover img { transform: none !important; }
 }
@@ -512,8 +551,6 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
 @media (max-width: 1180px) {
   .nav__list { gap: 22px; }
   .header__contacts { padding-right: 12px; }
-  .principles ul { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 32px; }
-  .principles li:nth-child(4) { border-left: 0; padding-left: 0; }
 }
 
 @media (max-width: 1100px) {
@@ -551,11 +588,12 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .nav__list a::after { display: none; }
 
   .hero__head, .about, .why, .contact, .intl__grid { grid-template-columns: minmax(0, 1fr); }
-  .hero__aside { justify-self: start; }
+  .hero__aside { justify-self: start; gap: 20px; }
+  .hero__lead { margin-bottom: 8px; }
   .hero__gallery { grid-template-columns: repeat(2, 1fr); padding: 0 var(--gutter); }
   .hero__photo:last-child { display: none; }
-  .tasks__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .tasks__list li:nth-child(3) { border-left: 0; padding-left: 0; }
+  .tasks__list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
+  .tasks__list li:nth-child(odd) { border-left: 0; padding-left: 0; }
   .section-head { grid-template-columns: minmax(0, 1fr); grid-template-areas: "eyebrow" "title" "side"; }
   .section-head__text, .section-head > .btn { margin-top: 24px; align-self: start; justify-self: start; }
   .section-head__text { max-width: 560px; }
@@ -564,7 +602,8 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .feature__media { min-height: 0; aspect-ratio: 16 / 10; }
   .cta__wrap { justify-content: center; }
   .why__media { min-height: 0; aspect-ratio: 16 / 10; }
-  .about__media { aspect-ratio: 16 / 10; order: -1; }
+  .about { grid-template-areas: "media" "eyebrow" "body"; }
+  .about__media { aspect-ratio: 16 / 10; margin-bottom: 40px; }
   .exp__grid { grid-template-columns: minmax(0, 1fr); }
   .exp__item { border-left: 0; padding: 28px 0; border-bottom: 1px solid var(--line-2); }
   .cases { grid-template-columns: minmax(0, 1fr); }
@@ -601,14 +640,14 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .hero__badge { left: 10px; right: 10px; bottom: 10px; padding: 14px 16px; gap: 14px; }
   .hero__badge-ico { width: 30px; height: 30px; padding-right: 14px; }
   .hero__badge strong { font-size: 16px; }
-  .tasks__list { grid-template-columns: minmax(0, 1fr); }
-  .tasks__list li { flex-direction: row; align-items: center; gap: 16px; padding: 16px 0; border-left: 0; border-top: 1px solid var(--dark-line); font-size: 19px; }
+  .tasks__list { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
+  .tasks__list li { flex-direction: row; align-items: center; gap: 20px; padding: 20px 0; border-left: 0; border-top: 1px solid var(--dark-line); font-size: 19px; }
   .tasks__list li:first-child { border-top: 0; }
   .steps-list { grid-template-columns: minmax(0, 1fr); }
   .steps-list li:nth-last-child(2) { border-bottom: 0; }
   .svc-grid { grid-template-columns: minmax(0, 1fr); }
   .svc { min-height: 0; padding: 24px; }
-  .feature__body { padding: 20px 12px 12px; }
+  .feature__body { padding: 32px 16px 16px; }
   .feature .btn, .cta .btn, .intl .btn { width: 100%; }
   .cta { background: var(--white); }
   .cta__bg { height: 300px; bottom: auto; object-position: 45% 60%; }
@@ -616,10 +655,6 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .cta__panel { padding-left: 24px; padding-right: 24px; }
   .why__list li { gap: 16px; }
   .why__ico { width: 52px; height: 52px; }
-  .principles ul { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 24px; }
-  .principles li, .principles li:nth-child(4) { padding: 0 12px; border-left: 1px solid var(--dark-line); }
-  .principles li:nth-child(odd) { border-left: 0; padding-left: 0; }
-  .principles b { font-size: 18px; }
 
 
   .exp__item { gap: 18px; }
@@ -652,14 +687,17 @@ html.lang-anim body, html.lang-in body { overflow-anchor: none; }
 /* ---------- Вирівнювання по висоті літер ----------
    Верх текстового блоку = верх великих літер першого рядка (а не верх рядка з інтерліньяжем),
    тож заголовок ліворуч і текст праворуч стоять на одній лінії незалежно від розміру шрифту. */
-.hero__title, .section-head h2, .section-head__text, .exp__num, .exp__unit { text-box: trim-start cap alphabetic; }
+.hero__title, .section-head h2, .section-head__text, .about h2, .exp__num, .exp__unit { text-box: trim-start cap alphabetic; }
+/* Hero і заголовки секцій: обрізаємо й низ до базової лінії — права колонка закінчується рівно на ній */
+.hero__title, .section-head h2, .section-head__text { text-box: trim-both cap alphabetic; }
 /* Цифри Literata на ~3.5% вищі за великі літери — опускаємо їх, щоб верх «20/15/25» збігався з верхом «РОКІВ» */
 .exp__num { margin-top: .035em; }
 /* Запасний варіант для браузерів без text-box (Firefox): той самий відступ, розрахований за метриками шрифтів */
 @supports not (text-box: trim-start cap alphabetic) {
-  .hero__title { margin-top: -.235em; }          /* Literata, line-height 1.06 */
-  .section-head h2 { margin-top: -.265em; }      /* Literata, line-height 1.12 */
+  .hero__title { margin-top: -.284em; margin-bottom: -.156em; } /* Literata, line-height 1.17; низ — до базової лінії */
+  .section-head h2 { margin-top: -.265em; margin-bottom: -.131em; } /* Literata, line-height 1.12 */
+  .about h2 { margin-top: -.265em; }
   .exp__unit { margin-top: -.42em; }            /* Onest, line-height 1.6 */
-  @media (min-width: 901px) { .section-head__text { margin-top: -.42em; } }
+  @media (min-width: 901px) { .section-head__text { margin-top: -.42em; margin-bottom: -.475em; } } /* Onest, line-height 1.6 */
   .exp__num { margin-top: -.08em; }              /* Literata, line-height .82, з поправкою на висоту цифр */
 }

@@ -67,6 +67,13 @@
   <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="9" cy="9.5" r="1.8" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m4 18 5-5 4 4 3-3 4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
   <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="4" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M4 21c.8-4.2 4-6.5 8-6.5s7.2 2.3 8 6.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+  <!-- «Принципи»: лінійні іконки в стилі стрічки «Завдання» -->
+  <symbol id="p-competence" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.6 13.4 7.5 21l4.5-2.6 4.5 2.6-1.1-7.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="p-result" viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-8M15 7h6v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="p-system" viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m14.5 17 2 2 3.5-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="p-reliable" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 10.5V7.5a3.5 3.5 0 0 1 7 0v3M12 14.5v2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="p-idea" viewBox="0 0 24 24"><path d="M9.5 17.5h5M10.5 21h3M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.4 1.1 2.2v1.5h5V16c0-.8.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="p-team" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.5 20c.6-3.5 3.2-5.5 6.5-5.5s5.9 2 6.5 5.5M15.5 5.2a3.5 3.5 0 0 1 0 6.6M18 14.9c1.9.7 3.2 2.5 3.5 5.1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
   <!-- «З ким ми працюємо»: лінійні іконки, гострі кути (stroke-linejoin: miter) -->
   <symbol id="w-investor" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="miter" stroke-linecap="square"><path d="M5 27h22M7 27V15M13 27V11M19 27V15M25 27V8"/><path d="M6 10l7-5 6 4 7-5"/></g></symbol>
   <symbol id="w-owner" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="miter" stroke-linecap="square"><path d="M4 27h24M7 27V13l9-7 9 7v14"/><path d="M13 27v-8h6v8"/><path d="M16 6V3"/></g></symbol>
@@ -122,12 +129,11 @@
   <!-- 1. HERO -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="container hero__head">
-      <h1 id="hero-title" class="hero__title reveal" data-i18n="hero.title">Реалізація <span class="pill">інвестиційних<i class="pill__dot" aria-hidden="true"></i></span> проєктів в&nbsp;Україні</h1>
+      <h1 id="hero-title" class="hero__title reveal" data-i18n="hero.title">Реалізація <span class="pill">інвестиційних</span> проєктів в&nbsp;Україні</h1>
       <div class="hero__aside reveal">
         <p class="hero__audience"><span data-i18n="hero.aud1">Інвесторам</span><span data-i18n="hero.aud2">Власникам</span><span data-i18n="hero.aud3">Девелоперам</span></p>
         <p class="hero__lead" data-i18n="hero.lead">Від аналізу до працюючого активу. Організовуємо, контролюємо, відповідаємо за&nbsp;погоджений результат.</p>
         <a class="btn btn--dark" href="#contact-form"><span data-i18n="cta.discuss">Обговорити проєкт</span> <svg class="ico"><use href="#i-arrow"/></svg></a>
-        <p class="hero__assure"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><span data-i18n="hero.assure">Первинна консультація без зобов’язань · NDA · українська / англійська</span></p>
       </div>
     </div>
     <div class="hero__gallery">
@@ -147,12 +153,12 @@
     </div>
     <div class="tasks">
       <div class="container">
-        <p class="tasks__label reveal" data-i18n="tasks.label">Завдання, з якими звертаються до&nbsp;UGP</p>
+        <p class="eyebrow eyebrow--light tasks__label reveal" data-i18n="tasks.label">Завдання, з якими звертаються до&nbsp;UGP</p>
         <ul class="tasks__list">
-          <li class="reveal"><svg class="ico"><use href="#i-restart"/></svg><span data-i18n="tasks.t1">Відновити зупинений проєкт</span></li>
-          <li class="reveal"><svg class="ico"><use href="#i-flow"/></svg><span data-i18n="tasks.t2">Організувати виконання</span></li>
-          <li class="reveal"><svg class="ico"><use href="#i-search"/></svg><span data-i18n="tasks.t3">Оцінити проєкт до інвестування</span></li>
-          <li class="reveal"><svg class="ico"><use href="#i-flag"/></svg><span data-i18n="tasks.t4">Підготувати до запуску</span></li>
+          <li class="reveal"><svg class="ico"><use href="#i-restart"/></svg><span data-i18n="tasks.t1">Відновити<br>зупинений проєкт</span></li>
+          <li class="reveal"><svg class="ico"><use href="#i-flow"/></svg><span data-i18n="tasks.t2">Організувати<br>виконання</span></li>
+          <li class="reveal"><svg class="ico"><use href="#i-search"/></svg><span data-i18n="tasks.t3">Оцінити проєкт<br>до інвестування</span></li>
+          <li class="reveal"><svg class="ico"><use href="#i-flag"/></svg><span data-i18n="tasks.t4">Підготувати<br>до запуску</span></li>
         </ul>
       </div>
     </div>
@@ -230,7 +236,6 @@
           <p class="svc__result"><span data-i18n="svc.result">Результат</span><b data-i18n="svc6.result">Узгоджений план і керований процес створення активу.</b></p>
         </article>
       </div>
-      <p class="fineprint reveal" data-i18n="services.fine">Правові напрями підтримують реалізацію інвестиційного проєкту. Оцінка ризиків входить до Due Diligence та роботи над проєктом.</p>
     </div>
   </section>
 
@@ -278,14 +283,14 @@
         </div>
       </div>
       <div class="principles reveal">
-        <p class="principles__label" data-i18n="why.principles">Принципи</p>
-        <ul>
-          <li><span>01</span><b data-i18n="why.p1">Компетентність</b></li>
-          <li><span>02</span><b data-i18n="why.p2">Результат — понад процес</b></li>
-          <li><span>03</span><b data-i18n="why.p3">Системність і контроль</b></li>
-          <li><span>04</span><b data-i18n="why.p4">Надійність і передбачуваність</b></li>
-          <li><span>05</span><b data-i18n="why.p5">Нестандартне мислення</b></li>
-          <li><span>06</span><b data-i18n="why.p6">Співпраця та комунікація</b></li>
+        <p class="eyebrow eyebrow--light tasks__label" data-i18n="why.principles">Принципи</p>
+        <ul class="tasks__list tasks__list--3">
+          <li><svg class="ico" aria-hidden="true"><use href="#p-competence"/></svg><span data-i18n="why.p1">Компетентність</span></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#p-result"/></svg><span data-i18n="why.p2">Результат —<br>понад процес</span></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#p-system"/></svg><span data-i18n="why.p3">Системність<br>і контроль</span></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#p-reliable"/></svg><span data-i18n="why.p4">Надійність<br>і передбачуваність</span></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#p-idea"/></svg><span data-i18n="why.p5">Нестандартне<br>мислення</span></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#p-team"/></svg><span data-i18n="why.p6">Співпраця<br>та комунікація</span></li>
         </ul>
       </div>
     </div>
@@ -314,8 +319,8 @@
   <section class="section section--white sheet" id="about" aria-labelledby="about-title">
     <div class="container">
       <div class="about">
+        <p class="eyebrow reveal" data-i18n="about.eyebrow">Про UGP</p>
         <div class="about__body">
-          <p class="eyebrow reveal" data-i18n="about.eyebrow">Про UGP</p>
           <h2 id="about-title" class="reveal" data-i18n="about.title">Партнер з реалізації інвестиційних і девелоперських проєктів <span class="tone">в&nbsp;Україні</span></h2>
           <p class="about__text reveal" data-i18n="about.text">Ми оцінюємо можливість реалізації, формуємо дорожню карту, організовуємо роботу профільних фахівців і контролюємо виконання до погодженого результату.</p>
           <ul class="about__points">
@@ -343,7 +348,6 @@
             <div><p class="exp__unit" data-i18n="exp.years">років</p><h3 data-i18n="exp.t3Title">GR, громади, репутація</h3><p data-i18n="exp.t3Text">Робота з владою, громадами, самоврядуванням.</p></div>
           </div>
         </div>
-        <p class="fineprint reveal" data-i18n="exp.fine">Це досвід партнерів за відповідними напрямами. Цифри не позначають вік компанії та не підсумовуються.</p>
       </div>
     </div>
   </section>
@@ -368,7 +372,7 @@
             <dl class="case__steps">
               <div><dt data-i18n="cases.lSituation">Ситуація</dt><dd data-i18n="case1.s">Будівництво зупинене, роботи не ведуться, ризики не оцінені.</dd></div>
               <div><dt data-i18n="cases.lAction">Що робимо</dt><dd data-i18n="case1.a">Аудит активу, дорожня карта, повернення підрядників до роботи.</dd></div>
-              <div><dt data-i18n="cases.lResult">Результат</dt><dd data-i18n="case1.r">Керований процес із відповідальними, строками та контрольними точками.</dd></div>
+              <div class="case__result"><dt data-i18n="cases.lResult">Результат</dt><dd data-i18n="case1.r">Керований процес із відповідальними, строками та контрольними точками.</dd></div>
             </dl>
           </div>
         </article>
@@ -381,7 +385,7 @@
             <dl class="case__steps">
               <div><dt data-i18n="cases.lSituation">Ситуація</dt><dd data-i18n="case2.s">Інвестор розглядає вкладення в бізнес-центр.</dd></div>
               <div><dt data-i18n="cases.lAction">Що робимо</dt><dd data-i18n="case2.a">Перевіряємо актив, права, обмеження та ризики.</dd></div>
-              <div><dt data-i18n="cases.lResult">Результат</dt><dd data-i18n="case2.r">Висновки для інвестиційного рішення та сценарії реалізації.</dd></div>
+              <div class="case__result"><dt data-i18n="cases.lResult">Результат</dt><dd data-i18n="case2.r">Висновки для інвестиційного рішення та сценарії реалізації.</dd></div>
             </dl>
           </div>
         </article>
@@ -394,7 +398,7 @@
             <dl class="case__steps">
               <div><dt data-i18n="cases.lSituation">Ситуація</dt><dd data-i18n="case3.s">Власник планує житловий комплекс і шукає, хто організує реалізацію.</dd></div>
               <div><dt data-i18n="cases.lAction">Що робимо</dt><dd data-i18n="case3.a">Модель проєкту, склад учасників, координація проєктних і дозвільних завдань.</dd></div>
-              <div><dt data-i18n="cases.lResult">Результат</dt><dd data-i18n="case3.r">Створений актив, переданий інвестору або оператору.</dd></div>
+              <div class="case__result"><dt data-i18n="cases.lResult">Результат</dt><dd data-i18n="case3.r">Створений актив, переданий інвестору або оператору.</dd></div>
             </dl>
           </div>
         </article>
