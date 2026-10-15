@@ -895,7 +895,10 @@ a.contact-card:hover { background: var(--card-2); border-color: var(--line-2); }
   .member__photo { aspect-ratio: auto; min-height: 260px; }
   .member__body { align-self: center; }
   .reviews__inner { grid-template-columns: minmax(0, 1fr); }
-  .reviews__media { aspect-ratio: 4 / 3.6; min-height: 0; }
+  /* Усі фото слайдера — position: absolute, тож висоту рамці задає in-flow ::before (padding 90% = 4 / 3.6).
+     Не aspect-ratio: у Safari/WebKit елемент сітки з aspect-ratio і лише абсолютним вмістом схлопувався до 0×0 — фото зникали */
+  .reviews__media { width: 100%; min-height: 0; }
+  .reviews__media::before { content: ""; display: block; padding-top: 90%; }
   .reviews__body { padding: 32px calc(var(--card-pad) - var(--inset)) calc(var(--card-pad) - var(--inset)); }
   .intl__rows li { grid-template-columns: 56px minmax(0, 1fr); gap: 16px; }
   .footer { --f-light: .75; }
